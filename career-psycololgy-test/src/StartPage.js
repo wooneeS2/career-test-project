@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import styled from "styled-components";
-import { StylesProvider } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+
 import {
   ToggleButtonGroup,
   Box,
