@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Router>
         <header className="App-header">
-          <Link to="/">메인화면</Link>
+          <Link to="/">메인화면가기</Link>
         </header>
         <Switch>
           <Route exact path="/" component={StartPage} />
