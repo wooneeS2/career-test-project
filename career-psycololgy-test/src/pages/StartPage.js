@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import styled from "styled-components";
-
 import {
   ToggleButtonGroup,
   Box,
@@ -32,7 +30,7 @@ const NameInput = styled(TextField)`
 `;
 
 const NextButton = styled(Button)`
-  display: block;
+  display: flex;
   margin: 0 auto;
   border-radius: 30px;
   color: #fff;
@@ -45,20 +43,8 @@ const NextButton = styled(Button)`
   box-shadow: 5px 2px 2px #ededed;
 `;
 
-const ButtonText = styled(Link)`
-  text-decoration: none;
-  color: #fffff;
-  font-size: 20px;
-  font-color: #ffffff;
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
-
+//TODO 가운데 정렬 Grid이용해서 만들어주기
+//TODO 이름, 성별 선택하지 않고 시작하기 눌렀을 때 안내 메시지 출력
 export function StartPage() {
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
@@ -137,19 +123,22 @@ export function StartPage() {
           alignItems="center"
           minHeight="100px"
         >
-          <ButtonText to={isActive ? "/sample-question" : "#"}>
+          <Box textAlign="center" sx={{ justifyContent: "center" }}>
             <NextButton
+              variant="contained"
               type="submit"
               size="large"
-              variant="contained"
               disabled={isActive ? false : true}
               onSubmit={handleInputChange}
+              href={isActive ? "/sample-question" : "#"}
             >
               시작하기
             </NextButton>
-          </ButtonText>
+          </Box>
         </Box>
       </form>
     </div>
   );
 }
+
+export default StartPage;
