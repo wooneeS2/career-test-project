@@ -2,6 +2,7 @@ import React from "react";
 import { QuestionList, MainQuestion } from "../components/Questions";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ProgressBar from "../components/ProgressBar";
 
 export function ProgressTest() {
   const [questions, setQeustions] = useState([]);
@@ -31,6 +32,7 @@ export function ProgressTest() {
   return (
     <div>
       <div>
+        <ProgressBar value={50} />
         <MainQuestion></MainQuestion>
       </div>
       {setQuestions}

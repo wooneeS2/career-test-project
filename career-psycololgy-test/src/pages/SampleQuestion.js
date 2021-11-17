@@ -1,49 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import SendIcon from "@mui/icons-material/Send";
 import { QuestionList, MainQuestion } from "../components/Questions";
 import { LinearProgress, Box, Grid, Button, Typography } from "@mui/material";
 import axios from "axios";
-
-function ProgressBar(props) {
-  return (
-    <Box
-      display="block"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="0"
-      sx={{ display: "flex", alignItems: "center", padding: "10px 0 0 10px" }}
-    >
-      <Box sx={{ width: "90%", mr: 3 }}>
-        <LinearProgress
-          variant="determinate"
-          sx={{ height: "0.5rem", borderRadius: "10px" }}
-          {...props}
-        />
-      </Box>
-      <Box>
-        <Typography
-          variant="body1"
-          sx={{ color: "#2D2627", fontWeight: "bold", fontSize: "1rem" }}
-        >{`${Math.round(props.value)}%`}</Typography>
-      </Box>
-    </Box>
-  );
-}
-
-const NextButton = styled(Button)`
-  display: flex;
-  margin: 0 auto;
-  border-radius: 30px;
-  color: #fff;
-  font-size: 1rem;
-
-  background-color: #378b29;
-  width: 200px;
-  height: 50px;
-  border: none;
-  box-shadow: 5px 2px 2px #ededed;
-`;
+import NextBtn from "../components/CustomButtons";
+import ProgressBar from "../components/ProgressBar";
 
 export function SampleQuestion() {
   const [isActive, setIsActive] = useState(false);
@@ -102,7 +62,7 @@ export function SampleQuestion() {
         >
           검사예시
         </Typography>
-        <ProgressBar value={50} />
+        <ProgressBar value={0} />
       </Grid>
       <MainQuestion></MainQuestion>
       <QuestionList
@@ -116,16 +76,11 @@ export function SampleQuestion() {
         handleIsActive={handleIsActive}
       ></QuestionList>
       <Grid item>
-        <NextButton
-          startIcon={<SendIcon />}
-          type="submit"
-          size="large"
-          variant="contained"
-          disabled={isActive ? false : true}
-          href={isActive ? "/test-progress" : "#"}
-        >
-          시작하기
-        </NextButton>
+        <NextBtn
+          toPath={isActive ? "/test-progress" : "#"}
+          title={"시작하기"}
+          isActive={isActive ? false : true}
+        />
       </Grid>
     </Grid>
   );

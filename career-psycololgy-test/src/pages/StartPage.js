@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import {
-  ToggleButtonGroup,
-  Box,
-  ToggleButton,
-  TextField,
-  Button,
-} from "@mui/material";
+import { ToggleButtonGroup, Box, ToggleButton, TextField } from "@mui/material";
+import NextBtn from "../components/CustomButtons";
 
 const MainTitle = styled.p`
   color: black;
@@ -27,20 +22,6 @@ const NameInput = styled(TextField)`
   //   //   margin: 0 auto;
   //   color: black;
   //   padding: 20px 0 20px 0;
-`;
-
-const NextButton = styled(Button)`
-  display: flex;
-  margin: 0 auto;
-  border-radius: 30px;
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
-  background-color: #eac086;
-  width: 200px;
-  height: 50px;
-  border: none;
-  box-shadow: 5px 2px 2px #ededed;
 `;
 
 //TODO 가운데 정렬 Grid이용해서 만들어주기
@@ -124,16 +105,11 @@ export function StartPage() {
           minHeight="100px"
         >
           <Box textAlign="center" sx={{ justifyContent: "center" }}>
-            <NextButton
-              variant="contained"
-              type="submit"
-              size="large"
-              disabled={isActive ? false : true}
-              onSubmit={handleInputChange}
-              href={isActive ? "/sample-question" : "#"}
-            >
-              시작하기
-            </NextButton>
+            <NextBtn
+              toPath={isActive ? "/sample-question" : "#"}
+              title={"시작하기"}
+              isActive={isActive ? false : true}
+            />
           </Box>
         </Box>
       </form>
