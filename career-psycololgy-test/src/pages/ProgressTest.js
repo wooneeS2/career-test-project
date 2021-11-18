@@ -1,14 +1,15 @@
 import React from "react";
-import { QuestionList, MainQuestion } from "../components/Questions";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { MainQuestion } from "../components/Questions";
 import ProgressBar from "../components/ProgressBar";
 import QuestionPagination from "../components/QuestionPagination";
+import Typography from "@mui/material/Typography";
+import MainTitle from "../style_components/Titles";
 
 export function ProgressTest() {
   return (
     <div>
       <div>
+        <MainTitle title={"검사 진행"} />
         <ProgressBar value={50} />
         <MainQuestion></MainQuestion>
         <QuestionPagination />

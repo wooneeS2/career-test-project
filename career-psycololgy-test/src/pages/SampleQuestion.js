@@ -4,6 +4,7 @@ import { Grid, Typography } from "@mui/material";
 import axios from "axios";
 import NextBtn from "../components/CustomButtons";
 import ProgressBar from "../components/ProgressBar";
+import MainTitle from "../style_components/Titles";
 
 export function SampleQuestion() {
   const [isActive, setIsActive] = useState(false);
@@ -56,12 +57,7 @@ export function SampleQuestion() {
       spacing={3}
     >
       <Grid item>
-        <Typography
-          variant="body1"
-          sx={{ color: "#2D2627", fontWeight: "bold", fontSize: "2rem" }}
-        >
-          검사예시
-        </Typography>
+        <MainTitle title={"검사 예시"} />
         <ProgressBar value={0} />
       </Grid>
       <MainQuestion></MainQuestion>

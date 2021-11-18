@@ -13,7 +13,9 @@ function Items({ currentItems, number }) {
               key={index}
               index={number}
               questions={q}
-              handleIsActive={"#"}
+              handleIsActive={e => {
+                console.log(e.target.value);
+              }}
             />
           </div>
         ))}
@@ -45,8 +47,7 @@ export function PaginatedItems({ itemsPerPage, items }) {
     );
     setItemOffset(newOffset);
   };
-  console.log(`currentItems :: ${currentItems}`);
-  console.log(`items :: ${items}`);
+
   return (
     <>
       <Items

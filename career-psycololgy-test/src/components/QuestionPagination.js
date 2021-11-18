@@ -1,5 +1,4 @@
 import React from "react";
-import { QuestionList, MainQuestion } from "../components/Questions";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./pagination.css";
