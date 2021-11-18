@@ -72,7 +72,7 @@ const Answer = ({ onChange, left, right, tol1, tol2 }) => {
   );
 };
 
-export function QuestionList({ questions, handleIsActive }) {
+export function QuestionList({ questions, handleIsActive, index }) {
   return (
     <Grid>
       <Grid
@@ -95,7 +95,7 @@ export function QuestionList({ questions, handleIsActive }) {
             paddingBottom: "30px",
           }}
         >
-          {questions.question}
+          {index}. {questions.question}
         </Typography>
         <Answer
           onChange={handleIsActive}

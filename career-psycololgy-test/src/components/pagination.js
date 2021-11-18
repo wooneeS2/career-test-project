@@ -1,23 +1,27 @@
 import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
 import "./pagination.css";
+import QuestionList from "./Questions";
 
-const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
-function Items({ currentItems }) {
+function Items({ currentItems, number }) {
   return (
     <div className="items">
       {currentItems &&
-        currentItems.map(item => (
+        currentItems.map((q, index) => (
           <div>
-            <h3>Item #{item}</h3>
+            <QuestionList
+              key={index}
+              index={number}
+              questions={q}
+              handleIsActive={"#"}
+            />
           </div>
         ))}
     </div>
   );
 }
 
-export function PaginatedItems({ itemsPerPage }) {
+export function PaginatedItems({ itemsPerPage, items }) {
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -41,10 +45,15 @@ export function PaginatedItems({ itemsPerPage }) {
     );
     setItemOffset(newOffset);
   };
-
+  console.log(`currentItems :: ${currentItems}`);
+  console.log(`items :: ${items}`);
   return (
     <>
-      <Items currentItems={currentItems} />
+      <Items
+        currentItems={currentItems}
+        // number={items.indexOf(currentItems[1])}
+        number={"인덱스"}
+      />
       <ReactPaginate
         nextLabel="next >"
         onPageChange={handlePageClick}
