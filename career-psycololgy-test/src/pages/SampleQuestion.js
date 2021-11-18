@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { QuestionList, MainQuestion } from "../components/Questions";
-import { LinearProgress, Box, Grid, Button, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import axios from "axios";
 import NextBtn from "../components/CustomButtons";
 import ProgressBar from "../components/ProgressBar";

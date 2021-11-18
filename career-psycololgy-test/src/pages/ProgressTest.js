@@ -3,6 +3,7 @@ import { QuestionList, MainQuestion } from "../components/Questions";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ProgressBar from "../components/ProgressBar";
+import PaginatedItems from "../components/pagination";
 
 export function ProgressTest() {
   const [questions, setQeustions] = useState([]);
@@ -25,8 +26,10 @@ export function ProgressTest() {
   };
   console.log("questions:", questions);
 
-  const setQuestions = questions.map(q => {
-    return <QuestionList questions={q} handleIsActive={handleNext} />;
+  const setQuestions = questions.map((q, index) => {
+    return (
+      <QuestionList key={index} questions={q} handleIsActive={handleNext} />
+    );
   });
 
   return (
@@ -36,6 +39,7 @@ export function ProgressTest() {
         <MainQuestion></MainQuestion>
       </div>
       {setQuestions}
+      <PaginatedItems itemsPerPage={5} />
     </div>
   );
 }
