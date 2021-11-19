@@ -6,8 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 
 function Items({ currentItems, number }) {
-  const answer = useSelector(state => state);
+  const [answer, setAnswr] = useState([{}]);
+  const answr = useSelector(state => state);
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(`answer array's number data :: ${answer.qitemNo}`);
+    console.log(`answer array's answer data :: ${answer.qitAnswr}`);
+  }, [answer]);
   return (
     <div className="items">
       {currentItems &&
@@ -18,9 +23,12 @@ function Items({ currentItems, number }) {
               index={q.qitemNo}
               questions={q}
               handleRadioBtn={e => {
-                console.log(e.target.value);
-                //TODO dispatch 사용법.... 알기....
-                //TODO dispatch로 e.target.value를 answer를 맵으로 선언해서 거기에 추가해주기...하...
+                console.log(`이벤트로 들어 온 값 :: ${e.target.value}`);
+
+                const newAnswr = answer;
+                newAnswr.push({ qitemNo: q.qitemNo, qitAnswr: e.target.value });
+                setAnswr(newAnswr);
+                console.log(answer);
               }}
             />
           </div>

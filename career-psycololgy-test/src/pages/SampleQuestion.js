@@ -76,6 +76,7 @@ export function SampleQuestion() {
           answerScore02: sampleQuestion.answerScore02,
         }}
         handleRadioBtn={handleIsActive}
+        index={1}
       ></QuestionList>
       <Grid item>
         <NextBtn

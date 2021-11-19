@@ -109,7 +109,7 @@ export function QuestionList({ questions, handleRadioBtn, index }) {
             paddingBottom: "30px",
           }}
         >
-          {index}. {questions.question}
+          {`${index}.`} {questions.question}
         </Typography>
         <Answer
           handleRadioBtn={handleRadioBtn}

@@ -8,11 +8,12 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { linkClasses } from "@mui/material";
 
-const arngmAnswr = [];
+//TODO 리덕스 선언부분
+const answr = 0;
+const arrangeAnswr = [];
 
-function addAnswr(state = arngmAnswr, action) {
-  if (action.type == "append") {
-    arngmAnswr.push(state);
+function addAnswr(state = answr, action) {
+  if (action.type == "inputAnswr") {
     return state;
   } else {
     return state;
