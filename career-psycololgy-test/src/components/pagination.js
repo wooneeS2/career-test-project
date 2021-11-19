@@ -12,17 +12,15 @@ function Items({ currentItems, number }) {
     <div className="items">
       {currentItems &&
         currentItems.map((q, index) => (
-          <div>
+          <div key={`${index}${q[index]}`}>
             <QuestionList
-              key={index}
-              index={number}
+              key={`${index}${q[index]}`}
+              index={q.qitemNo}
               questions={q}
-              handleIsActive={e => {
+              handleRadioBtn={e => {
                 console.log(e.target.value);
                 //TODO dispatch 사용법.... 알기....
                 //TODO dispatch로 e.target.value를 answer를 맵으로 선언해서 거기에 추가해주기...하...
-                dispatch({ type: "append" });
-                console.log("answer:", answer);
               }}
             />
           </div>
@@ -31,7 +29,7 @@ function Items({ currentItems, number }) {
   );
 }
 
-export function PaginatedItems({ itemsPerPage, items }) {
+export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -57,11 +55,7 @@ export function PaginatedItems({ itemsPerPage, items }) {
   };
   return (
     <>
-      <Items
-        currentItems={currentItems}
-        // number={items.indexOf(currentItems[1])}
-        number={"인덱스"}
-      />
+      <Items currentItems={currentItems} number={questionIndex} />
       <ReactPaginate
         nextLabel={<Button>다음</Button>}
         onPageChange={handlePageClick}
