@@ -2,16 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ToggleButtonGroup, Box, ToggleButton, TextField } from "@mui/material";
 import NextBtn from "../components/CustomButtons";
-
-const MainTitle = styled.p`
-  color: black;
-  font-size: 40px;
-  width: 300px;
-  margin: 0 auto;
-  display: block;
-  font-weight: bold;
-  padding-bottom: 20px;
-`;
+import MainTitle from "../style_components/Titles";
 
 const NameInput = styled(TextField)`
   //   display: block;
@@ -62,8 +53,17 @@ export function StartPage() {
         justifyContent="center"
         alignItems="center"
         minHeight="0"
+        sx={{
+          color: "black",
+          fontSize: "40px",
+          width: "300px",
+          margin: "0 auto",
+          display: "block",
+          fontWeight: "bold",
+          paddingBottom: "20px",
+        }}
       >
-        <MainTitle>직업 가치관 검사</MainTitle>
+        <MainTitle title={"직업 가치관 검사"}></MainTitle>
       </Box>
       <form>
         <Box

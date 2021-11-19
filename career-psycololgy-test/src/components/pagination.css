@@ -1,3 +1,7 @@
 .numbering {
   display: none;
 }
+
+.disabled-first-end {
+  display: none;
+}

@@ -2,13 +2,10 @@ import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
 import "./pagination.css";
 import QuestionList from "./Questions";
-import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 
-function Items({ currentItems, number }) {
-  const [answer, setAnswr] = useState([{}]);
-  const answr = useSelector(state => state);
-  const dispatch = useDispatch();
+function Items({ currentItems }) {
+  const [answer, setAnswr] = useState([]);
   useEffect(() => {
     console.log(`answer array's number data :: ${answer.qitemNo}`);
     console.log(`answer array's answer data :: ${answer.qitAnswr}`);
@@ -23,10 +20,12 @@ function Items({ currentItems, number }) {
               index={q.qitemNo}
               questions={q}
               handleRadioBtn={e => {
-                console.log(`이벤트로 들어 온 값 :: ${e.target.value}`);
-
                 const newAnswr = answer;
-                newAnswr.push({ qitemNo: q.qitemNo, qitAnswr: e.target.value });
+                var noKey = q.qitemNo;
+                //TODO 키 값 중복 제거하기
+                //TODO 키 값을 기준으로 오름차순 정리해주기
+
+                newAnswr.push({ [noKey]: e.target.value });
                 setAnswr(newAnswr);
                 console.log(answer);
               }}
@@ -44,6 +43,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
 
   useEffect(() => {
     // Fetch items from another resources.
@@ -51,6 +51,9 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
+
+    endOffset == pageCount * itemsPerPage ? setIsEnd(true) : setIsEnd(false);
+    console.log(`isEnd?? :: ${isEnd}`);
   }, [itemOffset, itemsPerPage]);
 
   // Invoke when user click to request another page.
@@ -83,7 +86,11 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
         activeClassName="active"
         renderOnZeroPageCount={null}
         pageClassName="numbering"
+        disabledClassName={"disabled-first-end"}
       />
+      {/* TODO 검사완료 페이지로 라우트해주기 */}
+      {/* TODO 정답이 다 채워지지 않았을 경우 경고문 표시하고 링크 작동 X */}
+      {isEnd ? <Button>검사완료</Button> : null}
     </>
   );
 }
