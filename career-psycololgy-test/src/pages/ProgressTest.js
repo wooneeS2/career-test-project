@@ -2,7 +2,6 @@ import React from "react";
 import { MainQuestion } from "../components/Questions";
 import ProgressBar from "../components/ProgressBar";
 import QuestionPagination from "../components/QuestionPagination";
-import Typography from "@mui/material/Typography";
 import MainTitle from "../style_components/Titles";
 
 export function ProgressTest() {

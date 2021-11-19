@@ -42,7 +42,15 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Answer = ({ onChange, left, right, tol1, tol2 }) => {
+const Answer = ({
+  left,
+  right,
+  tol1,
+  tol2,
+  leftValue,
+  rightValue,
+  handleRadioBtn,
+}) => {
   return (
     <Grid
       container
@@ -52,19 +60,25 @@ const Answer = ({ onChange, left, right, tol1, tol2 }) => {
       sx={{ paddingTop: "10px" }}
     >
       <FormControl component="fieldset">
-        <FormLabel component="legend"></FormLabel>
-
         <RadioGroup
           row
           aria-label="answer"
-          name="row-radio-buttons-group"
-          onChange={onChange}
+          name="answer-radio-btn"
+          onChange={handleRadioBtn}
         >
           <HtmlTooltip title={tol1} placement="left">
-            <FormControlLabel value="left" control={<Radio />} label={left} />
+            <FormControlLabel
+              value={leftValue}
+              control={<Radio />}
+              label={left}
+            />
           </HtmlTooltip>
           <HtmlTooltip title={tol2} placement="right">
-            <FormControlLabel value="right" control={<Radio />} label={right} />
+            <FormControlLabel
+              value={rightValue}
+              control={<Radio />}
+              label={right}
+            />
           </HtmlTooltip>
         </RadioGroup>
       </FormControl>
@@ -72,7 +86,7 @@ const Answer = ({ onChange, left, right, tol1, tol2 }) => {
   );
 };
 
-export function QuestionList({ questions, handleIsActive, index }) {
+export function QuestionList({ questions, handleRadioBtn, index }) {
   return (
     <Grid>
       <Grid
@@ -98,11 +112,13 @@ export function QuestionList({ questions, handleIsActive, index }) {
           {index}. {questions.question}
         </Typography>
         <Answer
-          onChange={handleIsActive}
+          handleRadioBtn={handleRadioBtn}
           left={questions.answer01}
           right={questions.answer02}
           tol1={questions.answer03}
           tol2={questions.answer04}
+          leftValue={questions.answerScore01}
+          rightValue={questions.answerScore02}
         />
       </Grid>
     </Grid>

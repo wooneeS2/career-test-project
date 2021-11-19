@@ -4,12 +4,30 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { linkClasses } from "@mui/material";
+
+const arngmAnswr = [];
+
+function addAnswr(state = arngmAnswr, action) {
+  if (action.type == "append") {
+    arngmAnswr.push(state);
+    return state;
+  } else {
+    return state;
+  }
+}
+
+let store = createStore(addAnswr);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

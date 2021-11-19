@@ -2,8 +2,12 @@ import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
 import "./pagination.css";
 import QuestionList from "./Questions";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
 
 function Items({ currentItems, number }) {
+  const answer = useSelector(state => state);
+  const dispatch = useDispatch();
   return (
     <div className="items">
       {currentItems &&
@@ -15,6 +19,10 @@ function Items({ currentItems, number }) {
               questions={q}
               handleIsActive={e => {
                 console.log(e.target.value);
+                //TODO dispatch 사용법.... 알기....
+                //TODO dispatch로 e.target.value를 answer를 맵으로 선언해서 거기에 추가해주기...하...
+                dispatch({ type: "append" });
+                console.log("answer:", answer);
               }}
             />
           </div>
@@ -47,7 +55,6 @@ export function PaginatedItems({ itemsPerPage, items }) {
     );
     setItemOffset(newOffset);
   };
-
   return (
     <>
       <Items
@@ -56,11 +63,11 @@ export function PaginatedItems({ itemsPerPage, items }) {
         number={"인덱스"}
       />
       <ReactPaginate
-        nextLabel="next >"
+        nextLabel={<Button>다음</Button>}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel={<Button>이전</Button>}
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"

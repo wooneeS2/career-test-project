@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { QuestionList, MainQuestion } from "../components/Questions";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import axios from "axios";
 import NextBtn from "../components/CustomButtons";
 import ProgressBar from "../components/ProgressBar";
@@ -14,11 +14,13 @@ export function SampleQuestion() {
     answer02: "",
     answer03: "",
     answer04: "",
+    answerScore01: "",
+    answerScore02: "",
   });
 
   const handleIsActive = e => {
-    e.target.value !== null ? setIsActive(true) : setIsActive(false);
     console.log(e.target.value);
+    e.target.value !== null ? setIsActive(true) : setIsActive(false);
     console.log(isActive);
   };
 
@@ -39,6 +41,8 @@ export function SampleQuestion() {
       newQue.answer02 = setRes.answer02;
       newQue.answer03 = setRes.answer03;
       newQue.answer04 = setRes.answer04;
+      newQue.answerScore01 = setRes.answerScore01;
+      newQue.answerScore02 = setRes.answerScore02;
       return newQue;
     });
   };
@@ -68,8 +72,10 @@ export function SampleQuestion() {
           answer02: sampleQuestion.answer02,
           answer03: sampleQuestion.answer03,
           answer04: sampleQuestion.answer04,
+          answerScore01: sampleQuestion.answerScore01,
+          answerScore02: sampleQuestion.answerScore02,
         }}
-        handleIsActive={handleIsActive}
+        handleRadioBtn={handleIsActive}
       ></QuestionList>
       <Grid item>
         <NextBtn
