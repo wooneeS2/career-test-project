@@ -5,44 +5,41 @@ import QuestionList from "../style_components/CustomQuestions";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
-function Items({ currentItems }) {
-  const [answer, setAnswr] = useState([]);
-  useEffect(() => {
-    console.log(`answer array's number data :: ${answer.qitemNo}`);
-    console.log(`answer array's answer data :: ${answer.qitAnswr}`);
-  }, [answer]);
-  return (
-    <div className="items">
-      {currentItems &&
-        currentItems.map((q, index) => (
-          <div key={`${index}${q[index]}`}>
-            <QuestionList
-              key={`${index}${q[index]}`}
-              index={q.qitemNo}
-              questions={q}
-              handleRadioBtn={e => {
-                const newAnswr = answer;
-                var keyNo = q.qitemNo;
-                //TODO 키 값 중복 제거하기
-                //TODO 키 값을 기준으로 오름차순 정리해주기
+// function
+// Items({ currentItems }) {
+//   const [answer, setAnswr] = useState([]);
+//   useEffect(() => {
+//     console.log(`answer array's number data :: ${answer.qitemNo}`);
+//     console.log(`answer array's answer data :: ${answer.qitAnswr}`);
+//   }, [answer]);
 
-                newAnswr.push({ [keyNo]: e.target.value });
-                setAnswr(newAnswr);
-                console.log(answer);
-              }}
-            />
-          </div>
-        ))}
-    </div>
-  );
-}
+//   return (
+//     <div className="items">
+//       {currentItems &&
+//         currentItems.map((q, index) => (
+//           <div key={`${index}${q[index]}`}>
+//             <QuestionList
+//               key={`${index}${q[index]}`}
+//               index={q.qitemNo}
+//               questions={q}
+//               handleRadioBtn={e => {
+//                 const newAnswr = answer;
+//                 var keyNo = q.qitemNo;
+//                 //TODO 키 값 중복 제거하기
+//                 //TODO 키 값을 기준으로 오름차순 정리해주기
 
-export function PaginatedItems({
-  itemsPerPage,
-  items,
-  questionIndex,
-  answerCount,
-}) {
+//                 newAnswr.push({ [keyNo]: e.target.value });
+//                 setAnswr(newAnswr);
+//                 console.log(answer);
+//               }}
+//             />
+//           </div>
+//         ))}
+//     </div>
+//   );
+// }
+
+export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -51,6 +48,14 @@ export function PaginatedItems({
   const [itemOffset, setItemOffset] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
   const [isNext, setIsNext] = useState(false);
+  const [answer, setAnswr] = useState([
+    {
+      id: "",
+      value: "",
+    },
+  ]);
+  //TODO let filterArr must be change State
+  const [filterAnswr, setFilterAnswr] = useState([]);
 
   useEffect(() => {
     // Fetch items from another resources.
@@ -71,14 +76,63 @@ export function PaginatedItems({
     );
     setItemOffset(newOffset);
   };
+  let filterArr = [];
+  useEffect(() => {
+    itemOffset + itemsPerPage === filterArr.length
+      ? setIsNext(true)
+      : setIsNext(false);
+    console.log("is Next?? :: ", isNext);
+    console.log("length?? :: ", itemOffset + itemsPerPage);
+    console.log("arr length?? :: ", filterArr.length);
+  }, [answer]);
+
+  const [leftBtn, setLeftBtn] = useState(false);
+  const [rightBtn, setRightBtn] = useState(false);
+
+  const Items = () => {
+    return (
+      <div className="items">
+        {currentItems &&
+          currentItems.map((q, index) => (
+            <div key={`${index}${q[index]}`}>
+              <QuestionList
+                key={`${index}${q[index]}`}
+                index={q.qitemNo}
+                questions={q}
+                leftBtn={leftBtn}
+                rightBtn={rightBtn}
+                handleRadioBtn={e => {
+                  setLeftBtn(e.target.value === q.answerScore01);
+                  setRightBtn(e.target.value === q.answerScore02);
+                  const oneAnswer = {
+                    id: q.qitemNo,
+                    value: e.target.value,
+                  };
+                  setAnswr(answer.concat(oneAnswer));
+
+                  // console.log(answer);
+                  const newArr = answer
+                    .slice()
+                    .reverse()
+                    .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+                    .reverse();
+
+                  setFilterAnswr(filterAnswr.concat(newArr));
+                  console.log(filterArr);
+                }}
+              />
+            </div>
+          ))}
+      </div>
+    );
+  };
 
   return (
     <>
-      <form name="answerPerPage">
-        <Items currentItems={currentItems} number={questionIndex} />
-      </form>
+      <Items currentItems={currentItems} number={questionIndex} />
+
       <ReactPaginate
-        nextLabel={<Button>다음</Button>}
+        nextLabel={isNext ? <Button>다음</Button> : <p>비활성화</p>}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}

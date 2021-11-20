@@ -6,7 +6,6 @@ import {
   Grid,
   Tooltip,
   FormControl,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
@@ -50,15 +49,14 @@ const Answer = ({
   leftValue,
   rightValue,
   handleRadioBtn,
+  leftBtn,
+  rightBtn,
 }) => {
+  const handleSubmit = e => {
+    console.log("form tag::::", e.target.value);
+  };
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      justifyContent="space-around"
-      sx={{ paddingTop: "10px" }}
-    >
+    <form onSubmit={handleSubmit}>
       <FormControl component="fieldset">
         <RadioGroup
           row
@@ -72,6 +70,7 @@ const Answer = ({
               control={<Radio />}
               label={left}
               labelPlacement="top"
+              checked={leftBtn}
             />
           </HtmlTooltip>
           <HtmlTooltip title={tol2} placement="right">
@@ -80,15 +79,22 @@ const Answer = ({
               control={<Radio />}
               label={right}
               labelPlacement="top"
+              checked={rightBtn}
             />
           </HtmlTooltip>
         </RadioGroup>
       </FormControl>
-    </Grid>
+    </form>
   );
 };
 
-export function QuestionList({ questions, handleRadioBtn, index }) {
+export function QuestionList({
+  questions,
+  handleRadioBtn,
+  index,
+  leftBtn,
+  rightBtn,
+}) {
   return (
     <Grid>
       <Grid
@@ -121,6 +127,8 @@ export function QuestionList({ questions, handleRadioBtn, index }) {
           tol2={questions.answer04}
           leftValue={questions.answerScore01}
           rightValue={questions.answerScore02}
+          leftBtn={leftBtn}
+          rightBtn={rightBtn}
         />
       </Grid>
     </Grid>
