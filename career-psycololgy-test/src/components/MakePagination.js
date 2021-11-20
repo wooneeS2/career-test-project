@@ -103,11 +103,13 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                   setAnswr(answer.concat(oneAnswer));
 
                   // console.log(answer);
-                  filterArr = answer
+                  const newArr = answer
                     .slice()
                     .reverse()
                     .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
                     .reverse();
+
+                  setFilterAnswr(newArr);
                   // console.log(filterArr);
                 }}
               />
