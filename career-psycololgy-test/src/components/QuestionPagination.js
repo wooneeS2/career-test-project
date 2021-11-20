@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./pagination.css";
+import "../style_components/pagination.css";
 import CircularProgress from "@mui/material/CircularProgress";
-import PaginatedItems from "../components/pagination";
+import PaginatedItems from "./MakePagination";
 
 export function QuestionPagination() {
   const [questions, setQeustions] = useState([]);

@@ -1,10 +1,10 @@
 import React from "react";
-import { MainQuestion } from "../components/Questions";
-import ProgressBar from "../components/ProgressBar";
+import { MainQuestion } from "../style_components/CustomQuestions";
+import ProgressBar from "../style_components/CustomProgressBar";
 import QuestionPagination from "../components/QuestionPagination";
-import MainTitle from "../style_components/Titles";
+import MainTitle from "../style_components/CustomTitles";
 
-export function ProgressTest() {
+export function ProgressTestPage() {
   return (
     <div>
       <div>
@@ -17,4 +17,4 @@ export function ProgressTest() {
   );
 }
 
-export default ProgressTest;
+export default ProgressTestPage;

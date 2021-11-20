@@ -71,6 +71,7 @@ const Answer = ({
               value={leftValue}
               control={<Radio />}
               label={left}
+              labelPlacement="top"
             />
           </HtmlTooltip>
           <HtmlTooltip title={tol2} placement="right">
@@ -78,6 +79,7 @@ const Answer = ({
               value={rightValue}
               control={<Radio />}
               label={right}
+              labelPlacement="top"
             />
           </HtmlTooltip>
         </RadioGroup>

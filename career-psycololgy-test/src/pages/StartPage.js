@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ToggleButtonGroup, Box, ToggleButton, TextField } from "@mui/material";
-import NextBtn from "../components/CustomButtons";
-import MainTitle from "../style_components/Titles";
+import NextBtn from "../style_components/CustomButtons";
+import MainTitle from "../style_components/CustomTitles";
 
 const NameInput = styled(TextField)`
   //   display: block;

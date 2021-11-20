@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { QuestionList, MainQuestion } from "../components/Questions";
+import {
+  QuestionList,
+  MainQuestion,
+} from "../style_components/CustomQuestions";
 import { Grid } from "@mui/material";
 import axios from "axios";
-import NextBtn from "../components/CustomButtons";
-import ProgressBar from "../components/ProgressBar";
-import MainTitle from "../style_components/Titles";
+import NextBtn from "../style_components/CustomButtons";
+import ProgressBar from "../style_components/CustomProgressBar";
+import MainTitle from "../style_components/CustomTitles";
 
-export function SampleQuestion() {
+export function SampleQuestionPage() {
   const [isActive, setIsActive] = useState(false);
   const [sampleQuestion, setSampleQuestion] = useState({
     question: "",
@@ -88,4 +91,4 @@ export function SampleQuestion() {
     </Grid>
   );
 }
-export default SampleQuestion;
+export default SampleQuestionPage;

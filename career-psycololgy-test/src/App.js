@@ -1,11 +1,11 @@
 import React from "react";
-import ProgressTest from "./pages/ProgressTest";
+import ProgressTestPage from "./pages/ProgressTestPage";
 import StartPage from "./pages/StartPage";
-import SampleQuestion from "./pages/SampleQuestion";
+import SampleQuestionPage from "./pages/SampleQuestionPage";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import PaginatedQuestions from "./components/QuestionPagination";
+import { TestFinishPage } from "./pages/TestFinishPage";
 
 const GoMain = () => {
   return (
@@ -26,9 +26,9 @@ function App() {
         </header>
         <Switch>
           <Route exact path="/" component={StartPage} />
-          <Route path="/sample-question" component={SampleQuestion} />
-          <Route path="/test-progress" component={ProgressTest} />
-          <Route path="/test" component={PaginatedQuestions} />
+          <Route path="/sample-question" component={SampleQuestionPage} />
+          <Route path="/test-progress" component={ProgressTestPage} />
+          <Route path="/test-finish" component={TestFinishPage} />
         </Switch>
       </Router>
 

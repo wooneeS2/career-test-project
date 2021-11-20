@@ -1,8 +1,9 @@
 import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
-import "./pagination.css";
-import QuestionList from "./Questions";
+import "../style_components/pagination.css";
+import QuestionList from "../style_components/CustomQuestions";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 function Items({ currentItems }) {
   const [answer, setAnswr] = useState([]);
@@ -21,11 +22,11 @@ function Items({ currentItems }) {
               questions={q}
               handleRadioBtn={e => {
                 const newAnswr = answer;
-                var noKey = q.qitemNo;
+                var keyNo = q.qitemNo;
                 //TODO 키 값 중복 제거하기
                 //TODO 키 값을 기준으로 오름차순 정리해주기
 
-                newAnswr.push({ [noKey]: e.target.value });
+                newAnswr.push({ [keyNo]: e.target.value });
                 setAnswr(newAnswr);
                 console.log(answer);
               }}
@@ -36,7 +37,12 @@ function Items({ currentItems }) {
   );
 }
 
-export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
+export function PaginatedItems({
+  itemsPerPage,
+  items,
+  questionIndex,
+  answerCount,
+}) {
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -44,6 +50,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
+  const [isNext, setIsNext] = useState(false);
 
   useEffect(() => {
     // Fetch items from another resources.
@@ -64,9 +71,12 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     );
     setItemOffset(newOffset);
   };
+
   return (
     <>
-      <Items currentItems={currentItems} number={questionIndex} />
+      <form name="answerPerPage">
+        <Items currentItems={currentItems} number={questionIndex} />
+      </form>
       <ReactPaginate
         nextLabel={<Button>다음</Button>}
         onPageChange={handlePageClick}
@@ -90,7 +100,11 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       />
       {/* TODO 검사완료 페이지로 라우트해주기 */}
       {/* TODO 정답이 다 채워지지 않았을 경우 경고문 표시하고 링크 작동 X */}
-      {isEnd ? <Button>검사완료</Button> : null}
+      {isEnd ? (
+        <Link to="/test-finish">
+          <Button>검사완료</Button>
+        </Link>
+      ) : null}
     </>
   );
 }
