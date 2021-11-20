@@ -82,12 +82,8 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       ? setIsNext(true)
       : setIsNext(false);
     console.log("is Next?? :: ", isNext);
-    console.log("length?? :: ", itemOffset + itemsPerPage);
-    console.log("arr length?? :: ", filterArr.length);
+    // console.log("didnt work");
   }, [answer]);
-
-  const [leftBtn, setLeftBtn] = useState(false);
-  const [rightBtn, setRightBtn] = useState(false);
 
   const Items = () => {
     return (
@@ -99,11 +95,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                 key={`${index}${q[index]}`}
                 index={q.qitemNo}
                 questions={q}
-                leftBtn={leftBtn}
-                rightBtn={rightBtn}
                 handleRadioBtn={e => {
-                  setLeftBtn(e.target.value === q.answerScore01);
-                  setRightBtn(e.target.value === q.answerScore02);
                   const oneAnswer = {
                     id: q.qitemNo,
                     value: e.target.value,
@@ -111,14 +103,12 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                   setAnswr(answer.concat(oneAnswer));
 
                   // console.log(answer);
-                  const newArr = answer
+                  filterArr = answer
                     .slice()
                     .reverse()
                     .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
                     .reverse();
-
-                  setFilterAnswr(filterAnswr.concat(newArr));
-                  console.log(filterArr);
+                  // console.log(filterArr);
                 }}
               />
             </div>

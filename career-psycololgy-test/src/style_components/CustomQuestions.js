@@ -49,8 +49,6 @@ const Answer = ({
   leftValue,
   rightValue,
   handleRadioBtn,
-  leftBtn,
-  rightBtn,
 }) => {
   const handleSubmit = e => {
     console.log("form tag::::", e.target.value);
@@ -70,7 +68,6 @@ const Answer = ({
               control={<Radio />}
               label={left}
               labelPlacement="top"
-              checked={leftBtn}
             />
           </HtmlTooltip>
           <HtmlTooltip title={tol2} placement="right">
@@ -79,7 +76,6 @@ const Answer = ({
               control={<Radio />}
               label={right}
               labelPlacement="top"
-              checked={rightBtn}
             />
           </HtmlTooltip>
         </RadioGroup>
@@ -127,8 +123,6 @@ export function QuestionList({
           tol2={questions.answer04}
           leftValue={questions.answerScore01}
           rightValue={questions.answerScore02}
-          leftBtn={leftBtn}
-          rightBtn={rightBtn}
         />
       </Grid>
     </Grid>
