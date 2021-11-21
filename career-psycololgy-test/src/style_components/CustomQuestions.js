@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import {
@@ -12,6 +12,7 @@ import {
   Switch,
   tooltipClasses,
 } from "@mui/material";
+import { AnswerDispatch } from "../App";
 
 export function MainQuestion() {
   return (
@@ -42,9 +43,20 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-function Answer({ left, right, tol1, tol2, leftValue, rightValue, index }) {
+function Answer({
+  left,
+  right,
+  tol1,
+  tol2,
+  leftValue,
+  rightValue,
+  index,
+  answers,
+}) {
+  const dispatch = useContext(AnswerDispatch);
   const [value, setValue] = useState(0);
   const [answr, setAnswr] = useState({ id: "", value: "" });
+  const [newAnswr, setNewAnswr] = useState([]);
   const handleRadio = e => {
     const values = e.target.value;
     setValue(values);
@@ -52,14 +64,15 @@ function Answer({ left, right, tol1, tol2, leftValue, rightValue, index }) {
       id: index,
       value: values,
     };
-    setAnswr(oneAnswr);
+    setAnswr("one::", oneAnswr);
     console.log(answr);
 
-    console.log("value", value);
-    console.log("values", values);
+    setNewAnswr([newAnswr.concat(oneAnswr)]);
+    console.log("new:::", newAnswr);
   };
   useEffect(() => {
     console.log(answr);
+    console.log(answers);
   }, [value]);
 
   return (
