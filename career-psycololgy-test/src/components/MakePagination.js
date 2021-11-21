@@ -1,50 +1,14 @@
 import ReactPaginate from "react-paginate";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../style_components/pagination.css";
 import QuestionList from "../style_components/CustomQuestions";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
-// function
-// Items({ currentItems }) {
-//   const [answer, setAnswr] = useState([]);
-//   useEffect(() => {
-//     console.log(`answer array's number data :: ${answer.qitemNo}`);
-//     console.log(`answer array's answer data :: ${answer.qitAnswr}`);
-//   }, [answer]);
-
-//   return (
-//     <div className="items">
-//       {currentItems &&
-//         currentItems.map((q, index) => (
-//           <div key={`${index}${q[index]}`}>
-//             <QuestionList
-//               key={`${index}${q[index]}`}
-//               index={q.qitemNo}
-//               questions={q}
-//               handleRadioBtn={e => {
-//                 const newAnswr = answer;
-//                 var keyNo = q.qitemNo;
-//                 //TODO 키 값 중복 제거하기
-//                 //TODO 키 값을 기준으로 오름차순 정리해주기
-
-//                 newAnswr.push({ [keyNo]: e.target.value });
-//                 setAnswr(newAnswr);
-//                 console.log(answer);
-//               }}
-//             />
-//           </div>
-//         ))}
-//     </div>
-//   );
-// }
-
 export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
-  // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
+
   const [itemOffset, setItemOffset] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
   const [isNext, setIsNext] = useState(false);
@@ -54,11 +18,10 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       value: "",
     },
   ]);
-  //TODO let filterArr must be change State
+
   const [filterAnswr, setFilterAnswr] = useState([]);
 
   useEffect(() => {
-    // Fetch items from another resources.
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(items.slice(itemOffset, endOffset));
@@ -68,7 +31,6 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     console.log(`isEnd?? :: ${isEnd}`);
   }, [itemOffset, itemsPerPage]);
 
-  // Invoke when user click to request another page.
   const handlePageClick = event => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
     console.log(
@@ -76,18 +38,46 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     );
     setItemOffset(newOffset);
   };
-  let filterArr = [];
+
+  // useEffect(() => {
+  //   itemOffset + itemsPerPage === filterArr.length
+  //     ? setIsNext(true)
+  //     : setIsNext(false);
+  //   console.log("is Next?? :: ", isNext);
+  //   // console.log("didnt work");
+  // }, [answer]);
+
   useEffect(() => {
-    itemOffset + itemsPerPage === filterArr.length
-      ? setIsNext(true)
-      : setIsNext(false);
-    console.log("is Next?? :: ", isNext);
-    console.log("length?? :: ", itemOffset + itemsPerPage);
-    console.log("arr length?? :: ", filterArr.length);
+    if (filterAnswr === null) {
+      return;
+    } else {
+      const newArr = answer
+        .slice()
+        .reverse()
+        .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+        .reverse();
+      console.log("newArr", newArr);
+      setFilterAnswr(newArr);
+      console.log("filter::", filterAnswr);
+    }
   }, [answer]);
 
-  const [leftBtn, setLeftBtn] = useState(false);
-  const [rightBtn, setRightBtn] = useState(false);
+  const handleRadioBtn = ({ id, value }) => {
+    const oneAnswer = {
+      id: id,
+      value: value,
+    };
+    setAnswr(answer.concat(oneAnswer));
+    console.log(answer);
+    const newArr = answer
+      .slice()
+      .reverse()
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+      .reverse();
+    console.log("newArr", newArr);
+    setFilterAnswr(newArr);
+    console.log("filter::", filterAnswr);
+  };
 
   const Items = () => {
     return (
@@ -99,26 +89,8 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                 key={`${index}${q[index]}`}
                 index={q.qitemNo}
                 questions={q}
-                leftBtn={leftBtn}
-                rightBtn={rightBtn}
                 handleRadioBtn={e => {
-                  setLeftBtn(e.target.value === q.answerScore01);
-                  setRightBtn(e.target.value === q.answerScore02);
-                  const oneAnswer = {
-                    id: q.qitemNo,
-                    value: e.target.value,
-                  };
-                  setAnswr(answer.concat(oneAnswer));
-
-                  // console.log(answer);
-                  const newArr = answer
-                    .slice()
-                    .reverse()
-                    .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-                    .reverse();
-
-                  setFilterAnswr(filterAnswr.concat(newArr));
-                  console.log(filterArr);
+                  handleRadioBtn({ id: q.qitemNo, value: e.target.value });
                 }}
               />
             </div>

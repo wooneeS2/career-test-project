@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import {
@@ -9,6 +9,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Switch,
   tooltipClasses,
 } from "@mui/material";
 
@@ -41,7 +42,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Answer = ({
+function Answer({
   left,
   right,
   tol1,
@@ -49,14 +50,14 @@ const Answer = ({
   leftValue,
   rightValue,
   handleRadioBtn,
-  leftBtn,
-  rightBtn,
-}) => {
-  const handleSubmit = e => {
-    console.log("form tag::::", e.target.value);
-  };
+  leftChecked,
+  rightChecked,
+}) {
+  const inputRef = useRef(null);
+  const answer = [];
+
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <FormControl component="fieldset">
         <RadioGroup
           row
@@ -70,7 +71,6 @@ const Answer = ({
               control={<Radio />}
               label={left}
               labelPlacement="top"
-              checked={leftBtn}
             />
           </HtmlTooltip>
           <HtmlTooltip title={tol2} placement="right">
@@ -79,14 +79,13 @@ const Answer = ({
               control={<Radio />}
               label={right}
               labelPlacement="top"
-              checked={rightBtn}
             />
           </HtmlTooltip>
         </RadioGroup>
       </FormControl>
-    </form>
+    </>
   );
-};
+}
 
 export function QuestionList({
   questions,
@@ -127,8 +126,8 @@ export function QuestionList({
           tol2={questions.answer04}
           leftValue={questions.answerScore01}
           rightValue={questions.answerScore02}
-          leftBtn={leftBtn}
-          rightBtn={rightBtn}
+          leftChecked={leftBtn}
+          rightChecked={rightBtn}
         />
       </Grid>
     </Grid>

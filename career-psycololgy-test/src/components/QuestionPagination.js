@@ -23,8 +23,6 @@ export function QuestionPagination() {
     requestQuestion();
   }, []);
 
-  console.log("questions:", questions);
-
   return (
     <div>
       {isDataOn ? (
