@@ -12,14 +12,6 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [itemOffset, setItemOffset] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
   const [isNext, setIsNext] = useState(false);
-  const [answer, setAnswr] = useState([
-    {
-      id: "",
-      value: "",
-    },
-  ]);
-
-  const [filterAnswr, setFilterAnswr] = useState([]);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -39,46 +31,6 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     setItemOffset(newOffset);
   };
 
-  // useEffect(() => {
-  //   itemOffset + itemsPerPage === filterArr.length
-  //     ? setIsNext(true)
-  //     : setIsNext(false);
-  //   console.log("is Next?? :: ", isNext);
-  //   // console.log("didnt work");
-  // }, [answer]);
-
-  useEffect(() => {
-    if (filterAnswr === null) {
-      return;
-    } else {
-      const newArr = answer
-        .slice()
-        .reverse()
-        .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-        .reverse();
-      console.log("newArr", newArr);
-      setFilterAnswr(newArr);
-      console.log("filter::", filterAnswr);
-    }
-  }, [answer]);
-
-  const handleRadioBtn = ({ id, value }) => {
-    const oneAnswer = {
-      id: id,
-      value: value,
-    };
-    setAnswr(answer.concat(oneAnswer));
-    console.log(answer);
-    const newArr = answer
-      .slice()
-      .reverse()
-      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-      .reverse();
-    console.log("newArr", newArr);
-    setFilterAnswr(newArr);
-    console.log("filter::", filterAnswr);
-  };
-
   const Items = () => {
     return (
       <div className="items">
@@ -89,9 +41,6 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                 key={`${index}${q[index]}`}
                 index={q.qitemNo}
                 questions={q}
-                handleRadioBtn={e => {
-                  handleRadioBtn({ id: q.qitemNo, value: e.target.value });
-                }}
               />
             </div>
           ))}

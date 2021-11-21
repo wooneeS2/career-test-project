@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import {
@@ -42,19 +42,25 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-function Answer({
-  left,
-  right,
-  tol1,
-  tol2,
-  leftValue,
-  rightValue,
-  handleRadioBtn,
-  leftChecked,
-  rightChecked,
-}) {
-  const inputRef = useRef(null);
-  const answer = [];
+function Answer({ left, right, tol1, tol2, leftValue, rightValue, index }) {
+  const [value, setValue] = useState(0);
+  const [answr, setAnswr] = useState({ id: "", value: "" });
+  const handleRadio = e => {
+    const values = e.target.value;
+    setValue(values);
+    const oneAnswr = {
+      id: index,
+      value: values,
+    };
+    setAnswr(oneAnswr);
+    console.log(answr);
+
+    console.log("value", value);
+    console.log("values", values);
+  };
+  useEffect(() => {
+    console.log(answr);
+  }, [value]);
 
   return (
     <>
@@ -63,7 +69,8 @@ function Answer({
           row
           aria-label="answer"
           name="answer-radio-btn"
-          onChange={handleRadioBtn}
+          onChange={handleRadio}
+          value={value}
         >
           <HtmlTooltip title={tol1} placement="left">
             <FormControlLabel
@@ -126,8 +133,7 @@ export function QuestionList({
           tol2={questions.answer04}
           leftValue={questions.answerScore01}
           rightValue={questions.answerScore02}
-          leftChecked={leftBtn}
-          rightChecked={rightBtn}
+          index={index}
         />
       </Grid>
     </Grid>
