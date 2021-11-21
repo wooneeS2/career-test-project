@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import {
@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   Radio,
   tooltipClasses,
+  easing,
 } from "@mui/material";
 
 export function MainQuestion() {
@@ -54,43 +55,35 @@ const Answer = ({
     console.log("form tag::::", e.target.value);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <FormControl component="fieldset">
-        <RadioGroup
-          row
-          aria-label="answer"
-          name="answer-radio-btn"
-          onChange={handleRadioBtn}
-        >
-          <HtmlTooltip title={tol1} placement="left">
-            <FormControlLabel
-              value={leftValue}
-              control={<Radio />}
-              label={left}
-              labelPlacement="top"
-            />
-          </HtmlTooltip>
-          <HtmlTooltip title={tol2} placement="right">
-            <FormControlLabel
-              value={rightValue}
-              control={<Radio />}
-              label={right}
-              labelPlacement="top"
-            />
-          </HtmlTooltip>
-        </RadioGroup>
-      </FormControl>
-    </form>
+    <FormControl component="fieldset">
+      <RadioGroup
+        row
+        aria-label="answer"
+        name="answer-radio-btn"
+        onChange={handleRadioBtn}
+      >
+        <HtmlTooltip title={tol1} placement="left">
+          <FormControlLabel
+            value={leftValue}
+            control={<Radio />}
+            label={left}
+            labelPlacement="top"
+          />
+        </HtmlTooltip>
+        <HtmlTooltip title={tol2} placement="right">
+          <FormControlLabel
+            value={rightValue}
+            control={<Radio />}
+            label={right}
+            labelPlacement="top"
+          />
+        </HtmlTooltip>
+      </RadioGroup>
+    </FormControl>
   );
 };
 
-export function QuestionList({
-  questions,
-  handleRadioBtn,
-  index,
-  leftBtn,
-  rightBtn,
-}) {
+export function QuestionList({ questions, index, handleRadioBtn }) {
   return (
     <Grid>
       <Grid
@@ -115,15 +108,17 @@ export function QuestionList({
         >
           {`${index}.`} {questions.question}
         </Typography>
-        <Answer
-          handleRadioBtn={handleRadioBtn}
-          left={questions.answer01}
-          right={questions.answer02}
-          tol1={questions.answer03}
-          tol2={questions.answer04}
-          leftValue={questions.answerScore01}
-          rightValue={questions.answerScore02}
-        />
+        <form>
+          <Answer
+            handleRadioBtn={handleRadioBtn}
+            left={questions.answer01}
+            right={questions.answer02}
+            tol1={questions.answer03}
+            tol2={questions.answer04}
+            leftValue={questions.answerScore01}
+            rightValue={questions.answerScore02}
+          />
+        </form>
       </Grid>
     </Grid>
   );

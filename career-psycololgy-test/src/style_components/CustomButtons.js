@@ -31,4 +31,14 @@ export function NextBtn({ toPath, title, isActive }) {
   );
 }
 
+export function PageBtn({ path, title }) {
+  return (
+    <Link to={path} style={{ textDecoration: "none" }}>
+      <Button variant="contained" type="submit" size="large">
+        {title}
+      </Button>
+    </Link>
+  );
+}
+
 export default NextBtn;

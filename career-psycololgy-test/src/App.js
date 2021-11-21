@@ -28,6 +28,7 @@ function App() {
           <Route exact path="/" component={StartPage} />
           <Route path="/sample-question" component={SampleQuestionPage} />
           <Route path="/test-progress" component={ProgressTestPage} />
+          <Route path="/test-progress/:data" component={ProgressTestPage} />
           <Route path="/test-finish" component={TestFinishPage} />
         </Switch>
       </Router>
