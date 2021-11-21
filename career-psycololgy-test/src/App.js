@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useReducer, useMemo, useCallback } from "react";
 import ProgressTestPage from "./pages/ProgressTestPage";
 import StartPage from "./pages/StartPage";
 import SampleQuestionPage from "./pages/SampleQuestionPage";
@@ -15,25 +15,65 @@ const GoMain = () => {
   );
 };
 
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <header className="App-header">
-          <Link to="/">
-            <GoMain />
-          </Link>
-        </header>
-        <Switch>
-          <Route exact path="/" component={StartPage} />
-          <Route path="/sample-question" component={SampleQuestionPage} />
-          <Route path="/test-progress" component={ProgressTestPage} />
-          <Route path="/test-finish" component={TestFinishPage} />
-        </Switch>
-      </Router>
+export const AnswerDispatch = React.createContext(null);
+const initialState = {
+  answers: [
+    {
+      id: "",
+      value: "",
+    },
+  ],
+};
 
-      <footer></footer>
-    </div>
+function reducer(state, action) {
+  switch (action.type) {
+    case "APPEND_ANSWER":
+      return {
+        answers: state.answers.concat(action.answer),
+      };
+      defualt: return state;
+  }
+}
+
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { answers } = state;
+  // const [{ id, value }, onChange, onReset] = useInputs({
+  //   id: "",
+  //   value: "",
+  // });
+
+  // const onAppend = useCallback(() => {
+  //   dispatch({
+  //     type: "APPEND_ANSWER",
+  //     answers: {
+  //       id,
+  //       value,
+  //     },
+  //   });
+  //   onreset();
+  // }, [id, value]);
+
+  return (
+    <AnswerDispatch.Provider value={dispatch}>
+      <div className="App">
+        <Router>
+          <header className="App-header">
+            <Link to="/">
+              <GoMain />
+            </Link>
+          </header>
+          <Switch>
+            <Route exact path="/" component={StartPage} />
+            <Route path="/sample-question" component={SampleQuestionPage} />
+            <Route path="/test-progress" component={ProgressTestPage} />
+            <Route path="/test-finish" component={TestFinishPage} />
+          </Switch>
+        </Router>
+
+        <footer></footer>
+      </div>
+    </AnswerDispatch.Provider>
   );
 }
 
