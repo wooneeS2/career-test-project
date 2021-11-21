@@ -9,7 +9,7 @@ import { PageBtn } from "../style_components/CustomButtons";
 export function QuestionComponent({ startNo, endNo }) {
   const [questions, setQeustions] = useState([]);
   const [isDataOn, setIsDataOn] = useState(false);
-  const [answr, setAnswr] = useState([{ id: "", value: "" }]);
+  const [answr, setAnswr] = useState([]);
   const [newAnswr, setNewAnswr] = useState([]);
 
   const url =
@@ -27,6 +27,12 @@ export function QuestionComponent({ startNo, endNo }) {
   }, []);
 
   const Items = ({ currentItems }) => {
+    const handleRadioChange = event => {
+      event.persist();
+      setAnswr(answr => [...answr, event.target.value]);
+      console.log("answer::", answr);
+    };
+
     return (
       <div className="items">
         {currentItems &&
@@ -37,6 +43,7 @@ export function QuestionComponent({ startNo, endNo }) {
                 key={`${index}${q[index]}`}
                 index={q.qitemNo}
                 questions={q}
+                handleRadioBtn={handleRadioChange}
               />
             </div>
           ))}

@@ -42,46 +42,84 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Answer = ({
+const NotWorking = ({
+  answer01,
+  answer02,
+  answerScore01,
+  answerScore02,
+  handleRadioBtn,
+}) => {
+  return (
+    <RadioGroup aria-label="two" name="two" row onChange={handleRadioBtn}>
+      <FormControlLabel
+        value={"1"}
+        control={<Radio color="primary" />}
+        label={1}
+        labelPlacement="top"
+      />
+      <FormControlLabel
+        value={2}
+        control={<Radio />}
+        label={2}
+        labelPlacement="top"
+      />
+    </RadioGroup>
+  );
+};
+
+function Answer({
   left,
   right,
   tol1,
   tol2,
   leftValue,
   rightValue,
+  index,
   handleRadioBtn,
-}) => {
-  const handleSubmit = e => {
-    console.log("form tag::::", e.target.value);
+}) {
+  const [value, setValue] = useState(0);
+  const [answr, setAnswr] = useState([{ id: "", value: "" }]);
+
+  const handleRadio = e => {
+    const values = e.target.value;
+    setValue(values);
+    const oneAnswr = {
+      id: index,
+      value: values,
+    };
+    setAnswr(answr.concat(oneAnswr));
+
+    console.log("answer::", answr);
   };
   return (
-    <FormControl component="fieldset">
-      <RadioGroup
-        row
-        aria-label="answer"
-        name="answer-radio-btn"
-        onChange={handleRadioBtn}
-      >
-        <HtmlTooltip title={tol1} placement="left">
-          <FormControlLabel
-            value={leftValue}
-            control={<Radio />}
-            label={left}
-            labelPlacement="top"
-          />
-        </HtmlTooltip>
-        <HtmlTooltip title={tol2} placement="right">
-          <FormControlLabel
-            value={rightValue}
-            control={<Radio />}
-            label={right}
-            labelPlacement="top"
-          />
-        </HtmlTooltip>
-      </RadioGroup>
-    </FormControl>
+    <RadioGroup
+      row
+      aria-label="answer"
+      name="answer-radio-btn"
+      onChange={handleRadio}
+      value={value}
+    >
+      <HtmlTooltip title={tol1} placement="left">
+        <FormControlLabel
+          name={"answer"}
+          value={leftValue}
+          control={<Radio />}
+          label={left}
+          labelPlacement="top"
+        />
+      </HtmlTooltip>
+      <HtmlTooltip title={tol2} placement="right">
+        <FormControlLabel
+          name={"answer"}
+          value={rightValue}
+          control={<Radio />}
+          label={right}
+          labelPlacement="top"
+        />
+      </HtmlTooltip>
+    </RadioGroup>
   );
-};
+}
 
 export function QuestionList({ questions, index, handleRadioBtn }) {
   return (
@@ -108,17 +146,17 @@ export function QuestionList({ questions, index, handleRadioBtn }) {
         >
           {`${index}.`} {questions.question}
         </Typography>
-        <form>
-          <Answer
-            handleRadioBtn={handleRadioBtn}
-            left={questions.answer01}
-            right={questions.answer02}
-            tol1={questions.answer03}
-            tol2={questions.answer04}
-            leftValue={questions.answerScore01}
-            rightValue={questions.answerScore02}
-          />
-        </form>
+
+        <Answer
+          handleRadioBtn={handleRadioBtn}
+          left={questions.answer01}
+          right={questions.answer02}
+          tol1={questions.answer03}
+          tol2={questions.answer04}
+          leftValue={questions.answerScore01}
+          rightValue={questions.answerScore02}
+          index={index}
+        />
       </Grid>
     </Grid>
   );
