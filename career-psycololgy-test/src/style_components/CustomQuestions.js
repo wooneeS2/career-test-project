@@ -11,6 +11,8 @@ import {
   Radio,
   Switch,
   tooltipClasses,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 
 export function MainQuestion() {
@@ -55,28 +57,17 @@ function Answer({
   tol2,
   leftValue,
   rightValue,
-  index,
-  answers,
+  handleRadio,
+  handleLeftChecked,
+  handleRightChecked,
 }) {
-  const [value, setValue] = useState(0);
+  const [alignment, setAlignment] = useState("web");
 
-  const [answr, setAnswr] = useState({ id: "", value: "" });
-  const [newAnswr, setNewAnswr] = useState([]);
-
-  const handleRadio = e => {
-    const values = e.target.value;
-    setValue(values);
-    const oneAnswr = {
-      id: index,
-      value: values,
-    };
-    setAnswr("one::", oneAnswr);
-
-    setNewAnswr([...newAnswr, oneAnswr]);
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
   };
-  useEffect(() => {
-    console.log(newAnswr);
-  }, [value]);
+  console.log("left::", leftValue);
+  console.log("right::", rightValue);
   return (
     <>
       <FormControl component="fieldset">
@@ -85,7 +76,6 @@ function Answer({
           aria-label="answer"
           name="answer-radio-btn"
           onChange={handleRadio}
-          value={value}
         >
           <HtmlTooltip title={tol1} placement="left">
             <FormControlLabel
@@ -105,6 +95,20 @@ function Answer({
           </HtmlTooltip>
         </RadioGroup>
       </FormControl>
+      {/* <ToggleButtonGroup
+        color="primary"
+        value="answer"
+        exclusive
+        onChange={handleChange}
+        value={alignment}
+      >
+        <HtmlTooltip title={tol1} placement="left">
+          <ToggleButton value={leftValue}>{left}</ToggleButton>
+        </HtmlTooltip>
+        <HtmlTooltip title={tol2} placement="right">
+          <ToggleButton value={rightValue}>{right}</ToggleButton>
+        </HtmlTooltip>
+      </ToggleButtonGroup> */}
     </>
   );
 }
@@ -113,8 +117,8 @@ export function QuestionList({
   questions,
   handleRadioBtn,
   index,
-  leftBtn,
-  rightBtn,
+  handleLeftChecked,
+  handleRightChecked,
 }) {
   return (
     <Grid sx={{ marginBottom: "40px", marginTop: "20px" }}>
@@ -143,7 +147,7 @@ export function QuestionList({
         </Box>
         <Box display="flex" justifyContent="center" sx={{ paddingTop: "10px" }}>
           <Answer
-            handleRadioBtn={handleRadioBtn}
+            handleRadio={handleRadioBtn}
             left={questions.answer01}
             right={questions.answer02}
             tol1={questions.answer03}
@@ -151,6 +155,8 @@ export function QuestionList({
             leftValue={questions.answerScore01}
             rightValue={questions.answerScore02}
             index={index}
+            // handleLeftChecked={handleLeftChecked}
+            // handleRightChecked={handleRightChecked}
           />
         </Box>
       </Grid>

@@ -12,6 +12,14 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [isEnd, setIsEnd] = useState(true);
   const [isNext, setIsNext] = useState(false);
 
+  const [value, setValue] = useState(0);
+  const [answr, setAnswr] = useState({ id: "", value: "" });
+  const [newAnswr, setNewAnswr] = useState([]);
+
+  useEffect(() => {
+    console.log(newAnswr);
+  }, [value]);
+
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -29,6 +37,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     );
     setItemOffset(newOffset);
   };
+  const handleChecked = false;
 
   const Items = () => {
     return (
@@ -40,6 +49,17 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                 key={`${index}${q[index]}`}
                 index={q.qitemNo}
                 questions={q}
+                handleRadioBtn={e => {
+                  const values = e.target.value;
+                  // setValue(values);
+                  const oneAnswr = {
+                    id: q.qitemNo,
+                    value: values,
+                  };
+                  // setAnswr("one::", oneAnswr);
+
+                  // setNewAnswr([...newAnswr, oneAnswr]);
+                }}
               />
             </div>
           ))}
