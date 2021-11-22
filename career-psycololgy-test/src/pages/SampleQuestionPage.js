@@ -3,7 +3,7 @@ import {
   QuestionList,
   MainQuestion,
 } from "../style_components/CustomQuestions";
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import axios from "axios";
 import NextBtn from "../style_components/CustomButtons";
 import ProgressBar from "../style_components/CustomProgressBar";
@@ -61,13 +61,15 @@ export function SampleQuestionPage() {
       alignItems="center"
       direction="column"
       display="inline"
-      spacing={3}
     >
-      <Grid item>
-        <MainTitle title={"검사 예시"} />
+      <MainTitle title={"검사 예시"} />
+      <Box sx={{ paddingBottom: "20px" }}>
         <ProgressBar value={0} />
-      </Grid>
-      <MainQuestion></MainQuestion>
+      </Box>
+
+      <Box sx={{ paddingBottom: "10px" }}>
+        <MainQuestion />
+      </Box>
       <QuestionList
         questions={{
           question: sampleQuestion.question,

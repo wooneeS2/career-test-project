@@ -15,7 +15,13 @@ import {
 
 export function MainQuestion() {
   return (
-    <Grid container direction="column" alignItems="center" justify="center">
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      justify="center"
+      sx={{ marginTop: "10px" }}
+    >
       <Box display="flex" justifyContent="center" alignItems="center">
         <Typography
           variant="body1"
@@ -53,8 +59,10 @@ function Answer({
   answers,
 }) {
   const [value, setValue] = useState(0);
+
   const [answr, setAnswr] = useState({ id: "", value: "" });
   const [newAnswr, setNewAnswr] = useState([]);
+
   const handleRadio = e => {
     const values = e.target.value;
     setValue(values);
@@ -63,19 +71,12 @@ function Answer({
       value: values,
     };
     setAnswr("one::", oneAnswr);
-    console.log(answr);
 
-    console.log("value", value);
-    console.log("values", values);
     setNewAnswr([...newAnswr, oneAnswr]);
-
-    console.log("new:::", newAnswr);
   };
   useEffect(() => {
-    console.log(answr);
-    console.log(answers);
+    console.log(newAnswr);
   }, [value]);
-
   return (
     <>
       <FormControl component="fieldset">
@@ -116,39 +117,42 @@ export function QuestionList({
   rightBtn,
 }) {
   return (
-    <Grid>
+    <Grid sx={{ marginBottom: "40px", marginTop: "20px" }}>
       <Grid
         item
         sx={{
-          height: 150,
           border: "medium dashed green",
           padding: "30px",
-          margin: "10px 20% 20px ",
+          margin: "10px 20% 10px ",
+          backgroundColor: "secondary.sub",
         }}
       >
-        <Typography
-          variant="body1"
-          align="center"
-          display="inline"
-          sx={{
-            color: "#000000",
-            fontWeight: "500",
-            fontSize: "1.1rem",
-            paddingBottom: "30px",
-          }}
-        >
-          {`${index}.`} {questions.question}
-        </Typography>
-        <Answer
-          handleRadioBtn={handleRadioBtn}
-          left={questions.answer01}
-          right={questions.answer02}
-          tol1={questions.answer03}
-          tol2={questions.answer04}
-          leftValue={questions.answerScore01}
-          rightValue={questions.answerScore02}
-          index={index}
-        />
+        <Box display="flex" justifyContent="center">
+          <Typography
+            variant="body1"
+            align="center"
+            display="inline"
+            sx={{
+              color: "#000000",
+              fontWeight: "500",
+              fontSize: "1.1rem",
+            }}
+          >
+            {`${index}.`} {questions.question}
+          </Typography>
+        </Box>
+        <Box display="flex" justifyContent="center" sx={{ paddingTop: "10px" }}>
+          <Answer
+            handleRadioBtn={handleRadioBtn}
+            left={questions.answer01}
+            right={questions.answer02}
+            tol1={questions.answer03}
+            tol2={questions.answer04}
+            leftValue={questions.answerScore01}
+            rightValue={questions.answerScore02}
+            index={index}
+          />
+        </Box>
       </Grid>
     </Grid>
   );

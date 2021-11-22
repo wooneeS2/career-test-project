@@ -4,7 +4,7 @@ import axios from "axios";
 import "../style_components/pagination.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import PaginatedItems from "./MakePagination";
-
+import { Box } from "@mui/material";
 export function QuestionPagination() {
   const [questions, setQeustions] = useState([]);
   const [isDataOn, setIsDataOn] = useState(false);
@@ -28,7 +28,9 @@ export function QuestionPagination() {
       {isDataOn ? (
         <PaginatedItems itemsPerPage={5} items={questions} />
       ) : (
-        <CircularProgress />
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <CircularProgress />
+        </Box>
       )}
     </div>
   );

@@ -10,7 +10,7 @@ const NextButton = styled(Button)`
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  background-color: #378b29;
+
   width: 200px;
   height: 50px;
   border: none;
@@ -24,10 +24,24 @@ export function NextBtn({ toPath, title, isActive }) {
         type="submit"
         size="large"
         disabled={isActive}
+        onChange={e => {
+          e.preventDefault();
+        }}
       >
         {title}
       </NextButton>
     </Link>
+  );
+}
+
+const PageBtn = styled(Button)`
+  display: flex;
+`;
+export function PageButton({ title, disabled }) {
+  return (
+    <PageBtn variant="outlined" disabled={disabled}>
+      {title}
+    </PageBtn>
   );
 }
 

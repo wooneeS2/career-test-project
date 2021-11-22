@@ -1,16 +1,15 @@
 import ReactPaginate from "react-paginate";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "../style_components/pagination.css";
 import QuestionList from "../style_components/CustomQuestions";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { NextBtn, PageButton } from "../style_components/CustomButtons";
 
 export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
 
   const [itemOffset, setItemOffset] = useState(0);
-  const [isEnd, setIsEnd] = useState(false);
+  const [isEnd, setIsEnd] = useState(true);
   const [isNext, setIsNext] = useState(false);
 
   useEffect(() => {
@@ -53,32 +52,23 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       <Items currentItems={currentItems} number={questionIndex} />
 
       <ReactPaginate
-        nextLabel={isNext ? <Button>다음</Button> : <p>비활성화</p>}
+        nextLabel={<PageButton title={"다음"} disabled={isEnd} />}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel={<Button>이전</Button>}
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
+        previousLabel={<PageButton title={"이전"} disabled={!isNext} />}
         containerClassName="pagination"
-        activeClassName="active"
         renderOnZeroPageCount={null}
         pageClassName="numbering"
-        disabledClassName={"disabled-first-end"}
       />
-      {/* TODO 검사완료 페이지로 라우트해주기 */}
+
       {/* TODO 정답이 다 채워지지 않았을 경우 경고문 표시하고 링크 작동 X */}
       {isEnd ? (
-        <Link to="/test-finish">
-          <Button>검사완료</Button>
-        </Link>
+        <NextBtn
+          toPath={isEnd ? "#" : "/test-finish"}
+          title={"검사완료"}
+          isActive={isEnd ? true : false}
+        />
       ) : null}
     </>
   );
