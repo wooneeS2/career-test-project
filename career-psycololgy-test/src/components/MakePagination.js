@@ -12,6 +12,14 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [isEnd, setIsEnd] = useState(true);
   const [isNext, setIsNext] = useState(false);
 
+  const [value, setValue] = useState(0);
+
+  const [newAnswr, setNewAnswr] = useState([]);
+
+  useEffect(() => {
+    console.log(newAnswr);
+  }, [value]);
+
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -40,6 +48,17 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                 key={`${index}${q[index]}`}
                 index={q.qitemNo}
                 questions={q}
+                handleRadioBtn={e => {
+                  const values = e.target.value;
+                  const oneAnswr = {
+                    id: q.qitemNo,
+                    value: values,
+                  };
+                  const temp = newAnswr;
+                  temp.push(oneAnswr);
+                  setNewAnswr(temp);
+                  console.log(newAnswr);
+                }}
               />
             </div>
           ))}
@@ -50,6 +69,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   return (
     <>
       <Items currentItems={currentItems} number={questionIndex} />
+      {/* TODO 페이지 내 문항을 모두 진행하기 전까지는 "다음" 버튼이 비활성화 상태여야 합니다. */}
 
       <ReactPaginate
         nextLabel={<PageButton title={"다음"} disabled={isEnd} />}
