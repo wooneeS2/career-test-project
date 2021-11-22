@@ -12,7 +12,6 @@ import {
   Switch,
   tooltipClasses,
 } from "@mui/material";
-import { AnswerDispatch } from "../App";
 
 export function MainQuestion() {
   return (
@@ -53,7 +52,6 @@ function Answer({
   index,
   answers,
 }) {
-  const dispatch = useContext(AnswerDispatch);
   const [value, setValue] = useState(0);
   const [answr, setAnswr] = useState({ id: "", value: "" });
   const [newAnswr, setNewAnswr] = useState([]);
@@ -67,14 +65,10 @@ function Answer({
     setAnswr("one::", oneAnswr);
     console.log(answr);
 
-<<<<<<< HEAD
     console.log("value", value);
     console.log("values", values);
     setNewAnswr([...newAnswr, oneAnswr]);
 
-=======
-    setNewAnswr([newAnswr.concat(oneAnswr)]);
->>>>>>> 1dd6407b469f47e70e97e15786701b7c775b6602
     console.log("new:::", newAnswr);
   };
   useEffect(() => {
