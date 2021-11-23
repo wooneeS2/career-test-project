@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 import {
@@ -9,10 +9,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Switch,
   tooltipClasses,
-  ToggleButton,
-  ToggleButtonGroup,
 } from "@mui/material";
 
 export function MainQuestion() {
@@ -38,7 +35,7 @@ export function MainQuestion() {
   );
 }
 
-const HtmlTooltip = styled(({ className, ...props }) => (
+export const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -92,14 +89,17 @@ function Answer({
         color="primary"
         value="answer"
         exclusive
-        onChange={handleRadio}
         value={leftValue}
       >
         <HtmlTooltip title={tol1} placement="left">
-          <ToggleButton value={leftValue}>{left}</ToggleButton>
+          <ToggleButton value={leftValue} onChange={handleRadio}>
+            {left}
+          </ToggleButton>
         </HtmlTooltip>
         <HtmlTooltip title={tol2} placement="right">
-          <ToggleButton value={rightValue}>{right}</ToggleButton>
+          <ToggleButton value={rightValue} onChange={handleRadio}>
+            {right}
+          </ToggleButton>
         </HtmlTooltip>
       </ToggleButtonGroup> */}
     </>

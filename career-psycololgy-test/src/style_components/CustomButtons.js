@@ -16,6 +16,7 @@ const NextButton = styled(Button)`
   border: none;
   box-shadow: 5px 2px 2px #ededed;
 `;
+
 export function NextBtn({ toPath, title, isActive }) {
   return (
     <Link to={toPath} style={{ textDecoration: "none" }}>
@@ -48,6 +49,30 @@ export function PageButton({ title, disabled }) {
     >
       {title}
     </PageBtn>
+  );
+}
+
+export function NextBtnWithoutLink({ onClick, title }) {
+  return (
+    <Button
+      onClick={onClick}
+      sx={{
+        display: "flex",
+        margin: "0 auto",
+        borderRadius: "30px",
+        color: "#fff",
+        fontSize: "1rem",
+        cursor: "pointer",
+        backgroundColor: "#378b29",
+        width: "200px",
+        height: "50px",
+        border: "none",
+        boxShadow: "5px 2px 2px #ededed",
+        marginBottom: "20px",
+      }}
+    >
+      {title}
+    </Button>
   );
 }
 

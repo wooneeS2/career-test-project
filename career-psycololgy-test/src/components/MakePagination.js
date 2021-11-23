@@ -1,24 +1,26 @@
 import ReactPaginate from "react-paginate";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import "../style_components/pagination.css";
 import QuestionList from "../style_components/CustomQuestions";
-import { NextBtn, PageButton } from "../style_components/CustomButtons";
+import {
+  PageButton,
+  NextBtnWithoutLink,
+} from "../style_components/CustomButtons";
+import { useHistory } from "react-router-dom";
 
 export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [isEnd, setIsEnd] = useState(false);
   const [newAnswr, setNewAnswr] = useState([]);
-  const [answrLen, setAnswrLen] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
-
-    endOffset == pageCount * itemsPerPage ? setIsEnd(true) : setIsEnd(false);
+    endOffset === pageCount * itemsPerPage ? setIsEnd(true) : setIsEnd(false);
   }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = event => {
@@ -72,6 +74,16 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     );
   };
 
+  let history = useHistory();
+  function handleClick() {
+    history.push({
+      pathname: "/test-finish",
+      state: {
+        newAnswr: newAnswr,
+      },
+    });
+  }
+
   return (
     <>
       <Items currentItems={currentItems} number={questionIndex} />
@@ -89,12 +101,9 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       />
 
       {/* TODO 응답 배열의 개수 !== 전체 문항의 개수 경고문 표시하고 링크 작동 X */}
+      {/* {<NextBtn toPath={"/test-finish"} title={"검사완료"} isActive={false} />} */}
       {isEnd ? (
-        <NextBtn
-          toPath={isEnd ? "#" : "/test-finish"}
-          title={"검사완료"}
-          isActive={isEnd ? true : false}
-        />
+        <NextBtnWithoutLink title={"검사 완료"} onClick={handleClick} />
       ) : null}
     </>
   );

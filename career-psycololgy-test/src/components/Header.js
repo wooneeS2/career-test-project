@@ -1,8 +1,8 @@
 import { IconButton, Box } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import MainTitle from "../style_components/CustomTitles";
+
 export function HeaderCompo({ title }) {
   const history = useHistory();
 

@@ -1,32 +1,21 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { ToggleButtonGroup, Box, ToggleButton, TextField } from "@mui/material";
 import NextBtn from "../style_components/CustomButtons";
 import MainTitle from "../style_components/CustomTitles";
 
-const NameInput = styled(TextField)`
-  //   display: block;
-  //   border: none;
-  //   outline: none;
-  //   background: none;
-  //   //   width: 300px;
-  //   //   margin: 0 auto;
-  //   color: black;
-  //   padding: 20px 0 20px 0;
-`;
-
-//TODO 가운데 정렬 Grid이용해서 만들어주기
 //TODO 이름, 성별 선택하지 않고 시작하기 눌렀을 때 안내 메시지 출력
+//TODO 학년도 받아오기
+//TODO 이름,성별,학년 react-hook-form 사용해서 받아오기
 export function StartPage() {
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
 
-  const handleInputChange = e => {
-    e.preventDefault();
-    console.log(name, gender);
-    console.log(isActive);
-  };
+  // const handleInputChange = e => {
+  //   e.preventDefault();
+  //   console.log(name, gender);
+  //   console.log(isActive);
+  // };
   const handleInputName = e => {
     setName(e.target.value);
     gender !== "" && name !== "" ? setIsActive(true) : setIsActive(false);
@@ -72,7 +61,7 @@ export function StartPage() {
           alignItems="center"
           minHeight="0"
         >
-          <NameInput
+          <TextField
             type="text"
             name="name"
             label="이름"

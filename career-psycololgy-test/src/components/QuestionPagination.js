@@ -5,6 +5,7 @@ import "../style_components/pagination.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import PaginatedItems from "./MakePagination";
 import { Box } from "@mui/material";
+
 export function QuestionPagination() {
   const [questions, setQeustions] = useState([]);
   const [isDataOn, setIsDataOn] = useState(false);
