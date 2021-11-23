@@ -5,6 +5,7 @@ import SampleQuestionPage from "./pages/SampleQuestionPage";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { TestFinishPage } from "./pages/TestFinishPage";
 import { HeaderCompo } from "./components/Header";
+import "./App.css";
 
 function App() {
   return (

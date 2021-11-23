@@ -1,5 +1,5 @@
 import ReactPaginate from "react-paginate";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "../style_components/pagination.css";
 import QuestionList from "../style_components/CustomQuestions";
 import { NextBtn, PageButton } from "../style_components/CustomButtons";
@@ -9,16 +9,12 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [pageCount, setPageCount] = useState(0);
 
   const [itemOffset, setItemOffset] = useState(0);
-  const [isEnd, setIsEnd] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
   const [isNext, setIsNext] = useState(false);
-
-  const [value, setValue] = useState(0);
+  const [answrLen, setAnswrLen] = useState(0);
 
   const [newAnswr, setNewAnswr] = useState([]);
-
-  useEffect(() => {
-    console.log(newAnswr);
-  }, [value]);
+  const [uniqArr, setUniqArr] = useState([]);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -27,7 +23,6 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     setPageCount(Math.ceil(items.length / itemsPerPage));
 
     endOffset == pageCount * itemsPerPage ? setIsEnd(true) : setIsEnd(false);
-    console.log(`isEnd?? :: ${isEnd}`);
   }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = event => {
@@ -36,6 +31,16 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
     setItemOffset(newOffset);
+  };
+
+  const rmDuplication = () => {
+    const newLen = newAnswr
+      .slice()
+      .reverse()
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+      .reverse();
+    console.log(newLen.length);
+    setAnswrLen(newLen);
   };
 
   const Items = () => {
@@ -54,10 +59,16 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                     id: q.qitemNo,
                     value: values,
                   };
-                  const temp = newAnswr;
-                  temp.push(oneAnswr);
-                  setNewAnswr(temp);
-                  console.log(newAnswr);
+
+                  //TODO 중복제거가 필요한데 여기서 일어나면 안됨!
+                  setNewAnswr(() => {
+                    const temp = newAnswr;
+                    temp.push(oneAnswr);
+
+                    return temp;
+                  });
+
+                  console.log("new::", newAnswr);
                 }}
               />
             </div>
@@ -69,10 +80,12 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   return (
     <>
       <Items currentItems={currentItems} number={questionIndex} />
-      {/* TODO 페이지 내 문항을 모두 진행하기 전까지는 "다음" 버튼이 비활성화 상태여야 합니다. */}
+      {/* TODO 응답 배열의 개수 == endOffset이면 버튼 활성화 */}
 
       <ReactPaginate
-        nextLabel={<PageButton title={"다음"} disabled={isEnd} />}
+        nextLabel={
+          <PageButton title={"다음"} disabled={answrLen !== 0 ? true : false} />
+        }
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
@@ -82,7 +95,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
         pageClassName="numbering"
       />
 
-      {/* TODO 정답이 다 채워지지 않았을 경우 경고문 표시하고 링크 작동 X */}
+      {/* TODO 응답 배열의 개수 !== 전체 문항의 개수 경고문 표시하고 링크 작동 X */}
       {isEnd ? (
         <NextBtn
           toPath={isEnd ? "#" : "/test-finish"}

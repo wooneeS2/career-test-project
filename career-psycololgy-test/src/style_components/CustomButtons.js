@@ -39,7 +39,13 @@ const PageBtn = styled(Button)`
 `;
 export function PageButton({ title, disabled }) {
   return (
-    <PageBtn variant="outlined" disabled={disabled}>
+    <PageBtn
+      variant="outlined"
+      disabled={false}
+      onClick={e => {
+        e.preventDefault();
+      }}
+    >
       {title}
     </PageBtn>
   );
