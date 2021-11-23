@@ -9,11 +9,8 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
-  const [isNext, setIsNext] = useState(false);
-  const [answrLen, setAnswrLen] = useState(0);
   const [newAnswr, setNewAnswr] = useState([]);
-
-  let len = 0;
+  const [answrLen, setAnswrLen] = useState(0);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -31,17 +28,6 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     );
     setItemOffset(newOffset);
   };
-  const handleChecked = false;
-
-  const rmDuplication = () => {
-    const newLen = newAnswr
-      .slice()
-      .reverse()
-      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-      .reverse();
-    console.log(newLen.length);
-    setAnswrLen(newLen);
-  };
 
   const Items = () => {
     return (
@@ -54,26 +40,12 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                 index={q.qitemNo}
                 questions={q}
                 handleRadioBtn={e => {
-                  // //set으로 저장
-                  // const values = e.target.value;
-                  // let index = q.qitemNo;
-
-                  // const inputValue = {
-                  //   [index]: values,
-                  // };
-                  // // const temp = { ...newAnswr };
-                  // // temp.add(inputValue);
-
-                  // setNewAnswr({ ...newAnswr, [index]: values });
-
-                  //배열로 저장
                   const values = e.target.value;
                   const oneAnswr = {
                     id: q.qitemNo,
                     value: values,
                   };
 
-                  //TODO 중복제거가 필요한데 여기서 일어나면 안됨!
                   setNewAnswr(() => {
                     const temp = newAnswr;
                     temp.push(oneAnswr);
@@ -85,10 +57,10 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                       )
                       .reverse();
                     console.log(newLen);
-                    setAnswrLen(newLen.length);
-                    console.log(answrLen);
 
                     return temp;
+                    //FIXME 중복을 제거한 배열을 넣으면 라디오 버튼 클릭이 안됨
+                    // return newLen;
                   });
 
                   console.log("new::", newAnswr);
@@ -106,15 +78,11 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       {/* TODO 응답 배열의 개수 == endOffset이면 버튼 활성화 */}
 
       <ReactPaginate
-        nextLabel={
-          answrLen == itemOffset + itemsPerPage ? (
-            <PageButton title={"다음"} disabled={true} />
-          ) : null
-        }
+        nextLabel={<PageButton title={"다음"} disabled={true} />}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel={<PageButton title={"이전"} disabled={!isNext} />}
+        previousLabel={<PageButton title={"이전"} disabled={true} />}
         containerClassName="pagination"
         renderOnZeroPageCount={null}
         pageClassName="numbering"
