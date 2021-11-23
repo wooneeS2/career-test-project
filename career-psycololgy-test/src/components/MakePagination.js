@@ -7,21 +7,13 @@ import { NextBtn, PageButton } from "../style_components/CustomButtons";
 export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
-
   const [itemOffset, setItemOffset] = useState(0);
   const [isEnd, setIsEnd] = useState(false);
   const [isNext, setIsNext] = useState(false);
   const [answrLen, setAnswrLen] = useState(0);
-
   const [newAnswr, setNewAnswr] = useState([]);
-  const [uniqArr, setUniqArr] = useState([]);
 
-  const [value, setValue] = useState(0);
-  const [answr, setAnswr] = useState({ id: "", value: "" });
-
-  useEffect(() => {
-    console.log(newAnswr);
-  }, [value]);
+  let len = 0;
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -62,6 +54,19 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                 index={q.qitemNo}
                 questions={q}
                 handleRadioBtn={e => {
+                  // //set으로 저장
+                  // const values = e.target.value;
+                  // let index = q.qitemNo;
+
+                  // const inputValue = {
+                  //   [index]: values,
+                  // };
+                  // // const temp = { ...newAnswr };
+                  // // temp.add(inputValue);
+
+                  // setNewAnswr({ ...newAnswr, [index]: values });
+
+                  //배열로 저장
                   const values = e.target.value;
                   const oneAnswr = {
                     id: q.qitemNo,
@@ -72,6 +77,16 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                   setNewAnswr(() => {
                     const temp = newAnswr;
                     temp.push(oneAnswr);
+                    const newLen = newAnswr
+                      .slice()
+                      .reverse()
+                      .filter(
+                        (v, i, a) => a.findIndex(t => t.id === v.id) === i
+                      )
+                      .reverse();
+                    console.log(newLen);
+                    setAnswrLen(newLen.length);
+                    console.log(answrLen);
 
                     return temp;
                   });
@@ -92,7 +107,9 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
 
       <ReactPaginate
         nextLabel={
-          <PageButton title={"다음"} disabled={answrLen !== 0 ? true : false} />
+          answrLen == itemOffset + itemsPerPage ? (
+            <PageButton title={"다음"} disabled={true} />
+          ) : null
         }
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}

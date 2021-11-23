@@ -57,17 +57,9 @@ function Answer({
   tol2,
   leftValue,
   rightValue,
-  handleRadio,
-  handleLeftChecked,
-  handleRightChecked,
-}) {
-  const [alignment, setAlignment] = useState("web");
 
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
-  // console.log("left::", leftValue);
-  // console.log("right::", rightValue);
+  handleRadio,
+}) {
   return (
     <>
       <FormControl component="fieldset">
@@ -95,12 +87,13 @@ function Answer({
           </HtmlTooltip>
         </RadioGroup>
       </FormControl>
+
       {/* <ToggleButtonGroup
         color="primary"
         value="answer"
         exclusive
-        onChange={handleChange}
-        value={alignment}
+        onChange={handleRadio}
+        value={leftValue}
       >
         <HtmlTooltip title={tol1} placement="left">
           <ToggleButton value={leftValue}>{left}</ToggleButton>
