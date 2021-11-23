@@ -16,6 +16,13 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [newAnswr, setNewAnswr] = useState([]);
   const [uniqArr, setUniqArr] = useState([]);
 
+  const [value, setValue] = useState(0);
+  const [answr, setAnswr] = useState({ id: "", value: "" });
+
+  useEffect(() => {
+    console.log(newAnswr);
+  }, [value]);
+
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -32,6 +39,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     );
     setItemOffset(newOffset);
   };
+  const handleChecked = false;
 
   const rmDuplication = () => {
     const newLen = newAnswr
