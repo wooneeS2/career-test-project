@@ -31,15 +31,21 @@ export function TestResultPage() {
 
 function LoadLocation() {
   let location = useLocation();
+  const [seq, setSeq] = useState("");
   const url =
     "http://www.career.go.kr/inspct/openapi/test/report?apikey=2cfc3ece4e557d4a41050b92786fdd44&qestrnSeq=6";
+  let infoUrl = `https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`;
   const api = "2cfc3ece4e557d4a41050b92786fdd44";
   const qestrnSeq = "6";
   let answers = location.state.answer;
   let resultUrl = "";
+  const [score, setScore] = useState([]);
+  const [st, setSt] = useState("");
+  const [nd, setNd] = useState("");
   console.log("answers:", answers);
 
   const request_post = async () => {
+    console.log("first");
     //TODO 여기 데이터들 변수로 바꿔주기
     //TODO 이름, 나이 ,학년 받아오기
     const response = await axios.post(url, {
@@ -59,15 +65,62 @@ function LoadLocation() {
     console.log(response.data);
     resultUrl = response.data.RESULT.url;
     console.log(resultUrl);
+    let tempSeq = resultUrl.split("seq=")[1];
+
+    console.log(tempSeq);
+    setSeq(tempSeq);
+    console.log(seq);
+  };
+
+  const requestInfo = async () => {
+    console.log("second");
+
+    const response = await axios.get(infoUrl);
+    const tempStr = response.data.result.wonScore;
+
+    const split = tempStr.split(" ");
+
+    const arr = split.map(a => {
+      const temp = a.split("=");
+
+      const result = [];
+
+      result.push(parseInt(temp[1]));
+
+      return result;
+    });
+
+    setScore(arr.flat());
+    console.log(score);
+  };
+
+  const numbering = () => {
+    var max = score[0];
+    for (var i = 0; i < score.length; i++) {
+      if (max < score[i]) {
+        max = score[i];
+      }
+      return max;
+    }
+    setSt(max);
+    console.log("max", max);
+    console.log("st", st);
   };
 
   useEffect(() => {
     request_post();
   }, []);
+  useEffect(() => {
+    requestInfo();
+  }, [seq]);
 
   useEffect(() => {
     console.log("correct::", location);
   }, [location]);
+
+  useEffect(() => {
+    numbering();
+  }, [score]);
 
   let history = useHistory();
 
