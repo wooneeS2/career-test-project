@@ -11,11 +11,6 @@ export function StartPage() {
   const [name, setName] = useState("");
   const [isActive, setIsActive] = useState(false);
 
-  // const handleInputChange = e => {
-  //   e.preventDefault();
-  //   console.log(name, gender);
-  //   console.log(isActive);
-  // };
   const handleInputName = e => {
     setName(e.target.value);
     gender !== "" && name !== "" ? setIsActive(true) : setIsActive(false);
