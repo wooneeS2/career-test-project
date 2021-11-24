@@ -14,34 +14,41 @@ function LoadLocation() {
   const [correctAnswrs, setCorrectAnswrs] = useState([]);
   const [uniqAnswrs, setUniqAnswrs] = useState([]);
   let location = useLocation();
+  const [finalAnswr, setFinalAnswr] = useState("");
+  let why = [];
+  let newArr = [];
 
   useEffect(() => {
     console.log("location", location);
     setCorrectAnswrs(location.state.newAnswr);
     console.log("correct::", correctAnswrs);
-    //FIXME 비동기처리 해줘야함!!
-    setUniqAnswrs(
-      correctAnswrs
-        .slice()
-        .reverse()
-        .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-        .reverse()
-        .sort(function (a, b) {
-          return a.id - b.id;
-        })
-    );
-    console.log("uniq", uniqAnswrs);
+    why = location.state.newAnswr;
+    console.log("first:", why);
+  }, []);
+
+  useEffect(() => {
+    newArr = why
+      .slice()
+      .reverse()
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+      .reverse()
+      .sort(function (a, b) {
+        return a.id - b.id;
+      });
+
+    console.log("second::", newArr);
+    let result = newArr.map(a => a.value);
+    console.log("third::", result);
+    let temp = result
+      .map((answer, index) => {
+        return `B${index + 1}=${answer}`;
+      })
+      .join(" ");
+    setFinalAnswr(temp);
+
+    console.log("final::", finalAnswr);
   }, [location]);
 
-  let result = uniqAnswrs.map(a => a.value);
-  console.log(result);
-  let finalAnswr = result
-    .map((answer, index) => {
-      return `B${index + 1}=${answer}`;
-    })
-    .join(" ");
-
-  console.log("final::", finalAnswr);
   let history = useHistory();
 
   const onClick = () => {
