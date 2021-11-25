@@ -65,9 +65,9 @@ function LoadLocation() {
         grade: userGrade,
         email: "",
         startDtm: 1550466291034,
-        // answers: postAnswrs,
-        answers:
-          "B1=2 B2=3 B3=6 B4=7 B5=10 B6=12 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
+        answers: postAnswrs,
+        // answers:
+        //   "B1=2 B2=3 B3=6 B4=7 B5=10 B6=12 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
       });
 
       setRequestUrl(result.data.RESULT.url);
