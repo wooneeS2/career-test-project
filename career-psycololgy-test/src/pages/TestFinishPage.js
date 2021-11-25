@@ -49,19 +49,25 @@ function LoadLocation() {
 
   useEffect(() => {
     async function requsetPost() {
+      let targetSe = sessionStorage.getItem("userTarget");
+      let userName = sessionStorage.getItem("userName");
+      let userGrade = sessionStorage.getItem("userGrade");
+      let userGender = sessionStorage.getItem("userGender");
+      let school = sessionStorage.getItem("userBelong");
+
       const result = await axios.post(url, {
         apikey: api,
         qestrnSeq: qestrnSeq,
-        trgetSe: "100214 ",
-        name: "gil-dong",
-        gender: "100323",
-        school: "hello",
-        grade: "1",
+        trgetSe: targetSe,
+        name: userName,
+        gender: userGender,
+        school: school,
+        grade: userGrade,
         email: "",
         startDtm: 1550466291034,
-        answers: postAnswrs,
-        // answers:
-        //   "B1=1 B2=4 B3=5 B4=8 B5=9 B6=11 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
+        // answers: postAnswrs,
+        answers:
+          "B1=1 B2=4 B3=5 B4=8 B5=9 B6=11 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
       });
 
       setRequestUrl(result.data.RESULT.url);
@@ -171,8 +177,14 @@ function LoadLocation() {
   return (
     <>
       <Box sx={{ margintTop: "20px" }}>
+        <Typography
+          display={"inline"}
+          sx={{ fontWeight: "bold", backgroundColor: "#D7E7D4" }}
+        >
+          {sessionStorage.getItem("userName")}
+        </Typography>
         <Typography display={"inline"}>
-          000님이 직업을 선택할 때 있어서 중요하게 생각하는 <br />
+          님이 직업을 선택할 때 있어서 중요하게 생각하는 <br />
           가치는{" "}
         </Typography>
         <Typography

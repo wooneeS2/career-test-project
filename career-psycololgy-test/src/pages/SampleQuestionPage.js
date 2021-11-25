@@ -52,6 +52,7 @@ export function SampleQuestionPage() {
 
   useEffect(() => {
     connectSampleQuestion();
+    console.log("local");
   }, []);
 
   return (

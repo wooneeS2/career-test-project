@@ -17,7 +17,7 @@ const NextButton = styled(Button)`
   box-shadow: 5px 2px 2px #ededed;
 `;
 
-export function NextBtn({ toPath, title, isActive }) {
+export function NextBtn({ toPath, title, isActive, onChange }) {
   return (
     <Link to={toPath} style={{ textDecoration: "none" }}>
       <NextButton
@@ -25,9 +25,7 @@ export function NextBtn({ toPath, title, isActive }) {
         type="submit"
         size="large"
         disabled={isActive}
-        onChange={e => {
-          e.preventDefault();
-        }}
+        onChange={onChange}
       >
         {title}
       </NextButton>

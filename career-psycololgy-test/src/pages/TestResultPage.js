@@ -156,6 +156,7 @@ function LoadLocation() {
   let history = useHistory();
 
   const onClick = () => {
+    sessionStorage.clear();
     history.push({
       pathname: "/",
     });
