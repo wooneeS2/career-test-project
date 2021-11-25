@@ -276,10 +276,23 @@ function LoadLocation() {
       console.log(e);
     }
   };
+  let today = new Date();
+  let year = today.getFullYear(); // 년도
+  let month = today.getMonth() + 1; // 월
+  let date = today.getDate(); // 날짜
 
   return (
     <>
-      <Typography variant="inherit" sx={{ marginBottom: "20px" }}>
+      <Typography display={"inline"} sx={{ backgroundColor: "#D7E7D4" }}>
+        [{sessionStorage.getItem("userName")},
+        {sessionStorage.getItem("userGender") === "100324" ? "여자" : "남자"},
+        {`${year}년 ${month}월 ${date}일`}]
+      </Typography>
+
+      <Typography
+        variant="inherit"
+        sx={{ marginBottom: "20px", marginTop: "20px" }}
+      >
         검사결과는 여러분이 직업을 선택할 때 상대적으로 어떠한 가치를 중요하게
         생각하는지 <br />
         알려주고, 중요 가치를 충족시켜 줄 수 있는 직업에 대해 생각해 볼 기회를
