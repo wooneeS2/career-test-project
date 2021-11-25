@@ -61,8 +61,6 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                     console.log(newLen);
 
                     return temp;
-                    //FIXME 중복을 제거한 배열을 넣으면 라디오 버튼 클릭이 안됨
-                    // return newLen;
                   });
 
                   console.log("new::", newAnswr);
@@ -76,6 +74,22 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
 
   let history = useHistory();
   function handleClick() {
+    let arrLen = newAnswr
+      .slice()
+      .reverse()
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+      .reverse()
+      .sort(function (a, b) {
+        return a.id - b.id;
+      }).length;
+    console.log(arrLen);
+
+    // if (arrLen < 28) {
+    //   {
+    //     // alert("모든 문항에 답변을 체크해주세요");
+    //     return;
+    //   }
+    // } else {
     history.push({
       pathname: "/test-finish",
       state: {
@@ -89,6 +103,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
           }),
       },
     });
+    // }
   }
 
   return (

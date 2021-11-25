@@ -52,26 +52,14 @@ export function PageButton({ title, disabled }) {
 
 export function NextBtnWithoutLink({ onClick, title }) {
   return (
-    <Button
+    <NextButton
+      variant="contained"
+      type="submit"
+      size="large"
       onClick={onClick}
-      sx={{
-        display: "flex",
-        margin: "0 auto",
-        borderRadius: "30px",
-        color: "#fff",
-        fontSize: "1rem",
-        cursor: "pointer",
-        backgroundColor: "#378b29",
-        width: "200px",
-        height: "50px",
-        border: "none",
-        boxShadow: "5px 2px 2px #ededed",
-        marginBottom: "20px",
-        marginTop: "20px",
-      }}
     >
       {title}
-    </Button>
+    </NextButton>
   );
 }
 

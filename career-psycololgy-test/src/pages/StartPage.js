@@ -29,12 +29,6 @@ export function StartPage() {
       ? setIsActive(true)
       : setIsActive(false);
   };
-  const handleInputBelong = e => {
-    let value = e.target.value;
-    value === null || value === "" || value === " "
-      ? setBelong("-")
-      : setBelong(e.target.value);
-  };
   const handleInputGender = event => {
     setGender(event.target.value);
 
@@ -42,18 +36,20 @@ export function StartPage() {
       ? setIsActive(true)
       : setIsActive(false);
   };
-
-  const handleInputGrade = event => {
-    setGrade(event.target.value);
-    gender !== "" && name !== "" && grade !== "" && targetSe !== ""
-      ? setIsActive(true)
-      : setIsActive(false);
+  const handleInputBelong = e => {
+    let value = e.target.value;
+    value === null || value === "" || value === " "
+      ? setBelong("-")
+      : setBelong(e.target.value);
   };
-  const handleInputTarget = event => {
-    setTargetSe(event.target.value);
-    gender !== "" && name !== "" && grade !== "" && targetSe !== ""
-      ? setIsActive(true)
-      : setIsActive(false);
+
+  const handleInputGrade = e => {
+    let value = e.target.value;
+    value === null ? setGrade("-") : setGrade(value);
+  };
+  const handleInputTarget = e => {
+    let value = e.target.value;
+    value === null ? setTargetSe("-") : setTargetSe(value);
   };
 
   useEffect(() => {
@@ -138,7 +134,7 @@ export function StartPage() {
             <MenuItem value={4}>4학년</MenuItem>
             <MenuItem value={5}>5학년</MenuItem>
           </Select>
-          <FormHelperText>(필수)학년을 선택해주세요.</FormHelperText>
+          <FormHelperText>(선택)학년을 선택해주세요.</FormHelperText>
         </FormControl>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="demo-simple-select-helper-label">
@@ -158,7 +154,7 @@ export function StartPage() {
             <MenuItem value={100214}>교사</MenuItem>
             <MenuItem value={100215}>교사(상담)</MenuItem>
           </Select>
-          <FormHelperText>(필수)검사자 타입을 선택해주세요.</FormHelperText>
+          <FormHelperText>(선택)검사자 타입을 선택해주세요.</FormHelperText>
         </FormControl>
         <Box
           display="flex"
@@ -169,7 +165,7 @@ export function StartPage() {
           <TextField
             type="text"
             name="belong"
-            label="소속"
+            label="소속(선택)"
             onChange={handleInputBelong}
             variant="standard"
             placeholder="소속을 입력해주세요.(선택)"

@@ -67,16 +67,18 @@ function LoadLocation() {
         startDtm: 1550466291034,
         // answers: postAnswrs,
         answers:
-          "B1=1 B2=4 B3=5 B4=8 B5=9 B6=11 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
+          "B1=2 B2=3 B3=6 B4=7 B5=10 B6=12 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
       });
 
       setRequestUrl(result.data.RESULT.url);
+      console.log("결과", requestUrl);
     }
     requsetPost();
   }, [postAnswrs]);
 
   useEffect(() => {
     let tempSeq = requestUrl.split("seq=")[1];
+    console.log(tempSeq);
 
     setSeq(tempSeq);
   }, [requestUrl]);
@@ -86,6 +88,7 @@ function LoadLocation() {
     async function requestGet() {
       let infoUrl = `https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`;
 
+      console.log("seq", seq);
       const result = await axios.get(infoUrl);
 
       setResultData(result.data);
@@ -112,20 +115,24 @@ function LoadLocation() {
       var score = arr.flat();
       score.pop();
       setAllScore(score);
-      let max = score.reduce((prev, cur) => {
+      let scores = [...score, 0];
+      console.log("최종 점수:", score);
+      let max = scores.reduce((prev, cur) => {
         return prev > cur ? prev : cur;
       }, 0);
 
-      setSt(score.indexOf(max) + 1);
+      setSt(scores.indexOf(max));
+      console.log("최고점", max, "인덱스", scores.indexOf(max));
+      let found = scores.findIndex(e => e === max);
 
-      let filterd = score.filter(e => e !== max);
-
+      let filterd = scores.splice(found, 1, 0);
+      console.log(filterd);
       let second = filterd.reduce((prev, cur) => {
         return prev > cur ? prev : cur;
       }, 0);
-      var newScore = arr.flat();
 
-      setNd(newScore.indexOf(second) + 1);
+      setNd(scores.indexOf(second));
+      console.log("2등", second, "인덱스", score.indexOf(second));
     }
     requestGet();
   }, [tempStr]);
@@ -133,20 +140,28 @@ function LoadLocation() {
   useEffect(() => {
     //학력별 직업
     async function requestEducation() {
-      let jobUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${st}&no2=${nd}`;
+      let jobUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${
+        st + 1
+      }&no2=${nd + 1}`;
       const response = await axios.get(jobUrl);
-      setEducationJobs([...educationJobs, response.data]);
+      console.log("joburl", jobUrl);
+      setEducationJobs([response.data]);
+      console.log("education", response.data);
     }
 
     async function requestMajor() {
-      let jobUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${st}&no2=${nd}`;
-      const response = await axios.get(jobUrl);
-      setMajorJobs([...majorJobs, response.data]);
+      let majorUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${
+        st + 1
+      }&no2=${nd + 1}`;
+      const response = await axios.get(majorUrl);
+      console.log("majorUrl", majorUrl);
+      setMajorJobs([response.data]);
+      console.log("major", response.data);
     }
 
     requestEducation();
     requestMajor();
-  }, [nd]);
+  }, [st, nd]);
 
   let history = useHistory();
 
@@ -171,8 +186,8 @@ function LoadLocation() {
     "자기계발",
     "창의성",
   ];
-  let one = values[st + 1];
-  let two = values[nd + 1];
+  let one = values[st];
+  let two = values[nd];
 
   return (
     <>

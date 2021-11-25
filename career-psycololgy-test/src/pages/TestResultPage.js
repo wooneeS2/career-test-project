@@ -54,9 +54,9 @@ function LoadLocation() {
   }, []);
 
   useEffect(() => {
-    setEducationData(location.state.education[1]);
+    setEducationData(location.state.education[0]);
 
-    setmajorData(location.state.major[1]);
+    setmajorData(location.state.major[0]);
   }, [location]);
 
   useEffect(() => {
@@ -139,6 +139,7 @@ function LoadLocation() {
       createData("예체능", Job7);
 
       setMajorJobs([
+        createData("계열 무관", Job0),
         createData("인문", Job1),
         createData("사회", Job2),
         createData("교육", Job3),
@@ -264,6 +265,17 @@ function LoadLocation() {
       </Paper>
     );
   }
+  console.log(location);
+
+  const handleCopyClipBoard = async () => {
+    try {
+      await navigator.clipboard.writeText(location.state.resultUrl);
+      alert("복사되었습니다. 링크를 공유해보세요.");
+    } catch (e) {
+      alert("복사 실패");
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -304,6 +316,7 @@ function LoadLocation() {
             color="primary"
             aria-label="sns-share"
             sx={{ backgroundColor: "#D7E7D4", marginLeft: "20px" }}
+            onClick={handleCopyClipBoard}
           >
             <ShareIcon />
           </IconButton>
