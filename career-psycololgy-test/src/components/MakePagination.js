@@ -79,7 +79,14 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     history.push({
       pathname: "/test-finish",
       state: {
-        newAnswr: newAnswr,
+        newAnswr: newAnswr
+          .slice()
+          .reverse()
+          .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+          .reverse()
+          .sort(function (a, b) {
+            return a.id - b.id;
+          }),
       },
     });
   }
