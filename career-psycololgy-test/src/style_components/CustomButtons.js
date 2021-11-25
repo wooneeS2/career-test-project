@@ -69,6 +69,7 @@ export function NextBtnWithoutLink({ onClick, title }) {
         border: "none",
         boxShadow: "5px 2px 2px #ededed",
         marginBottom: "20px",
+        marginTop: "20px",
       }}
     >
       {title}
