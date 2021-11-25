@@ -28,7 +28,7 @@ function LoadLocation() {
   const [majorJobs, setMajorJobs] = useState([]);
   const url =
     "http://www.career.go.kr/inspct/openapi/test/report?apikey=2cfc3ece4e557d4a41050b92786fdd44&qestrnSeq=6";
-  let infoUrl = `https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`;
+
   const api = "2cfc3ece4e557d4a41050b92786fdd44";
   const qestrnSeq = "6";
 
@@ -39,17 +39,15 @@ function LoadLocation() {
   }, []);
 
   useEffect(() => {
-    let result = location.state.newAnswr
+    const result = location.state.newAnswr
       .map((answer, index) => {
         return `B${index + 1}=${answer.value}`;
       })
       .join(" ");
     setPostAnswrs(result);
-    console.log("postAnswr", postAnswrs);
   }, [location]);
 
   useEffect(() => {
-    console.log("request post");
     async function requsetPost() {
       const result = await axios.post(url, {
         apikey: api,
@@ -66,9 +64,7 @@ function LoadLocation() {
         //   "B1=1 B2=4 B3=5 B4=8 B5=9 B6=11 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
       });
 
-      console.log(result.data);
       setRequestUrl(result.data.RESULT.url);
-      console.log("url", requestUrl);
     }
     requsetPost();
   }, [postAnswrs]);
@@ -76,31 +72,28 @@ function LoadLocation() {
   useEffect(() => {
     let tempSeq = requestUrl.split("seq=")[1];
 
-    console.log("tempSeq", tempSeq);
     setSeq(tempSeq);
-    console.log("seq", seq);
   }, [requestUrl]);
 
+  const [tempStr, setTempStr] = useState("");
   useEffect(() => {
-    console.log("request score");
     async function requestGet() {
-      console.log("info url", infoUrl);
+      let infoUrl = `https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`;
+
       const result = await axios.get(infoUrl);
-      console.log(result.data);
+
       setResultData(result.data);
-      console.log("result data::", resultData);
+
+      setTempStr(result.data.result.wonScore);
     }
     requestGet();
   }, [seq]);
 
   useEffect(() => {
     async function requestGet() {
-      //FIXME finish페이지로 넘어갈 때 wonScore관련 에러 고치기.....
-      const tempStr = resultData.result["wonScore"];
+      const split = tempStr.split(" ");
 
-      const split = await tempStr.split(" ");
-
-      const arr = await split.map(a => {
+      const arr = split.map(a => {
         const temp = a.split("=");
 
         const result = [];
@@ -109,35 +102,31 @@ function LoadLocation() {
 
         return result;
       });
-      console.log(arr.flat());
+
       var score = arr.flat();
       score.pop();
       setAllScore(score);
       let max = score.reduce((prev, cur) => {
         return prev > cur ? prev : cur;
-      });
+      }, 0);
 
-      console.log("max", max);
       setSt(score.indexOf(max) + 1);
 
       let filterd = score.filter(e => e !== max);
 
       let second = filterd.reduce((prev, cur) => {
         return prev > cur ? prev : cur;
-      });
+      }, 0);
       var newScore = arr.flat();
-      console.log(newScore);
 
       setNd(newScore.indexOf(second) + 1);
-      console.log(nd, "second");
     }
     requestGet();
-  }, [resultData]);
+  }, [tempStr]);
 
   useEffect(() => {
     //학력별 직업
     async function requestEducation() {
-      console.log("completed score");
       let jobUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${st}&no2=${nd}`;
       const response = await axios.get(jobUrl);
       setEducationJobs([...educationJobs, response.data]);

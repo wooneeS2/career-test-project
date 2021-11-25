@@ -61,7 +61,6 @@ function LoadLocation() {
 
   useEffect(() => {
     const education = () => {
-      // console.log(educationData);
       const Job1 = educationData
         .filter(element => element[2] === 1)
         .map(a => a[1])
@@ -88,13 +87,6 @@ function LoadLocation() {
         .join(", ");
       createData("대학원졸", Job5);
 
-      // console.log(educationJobs);
-      // console.log(Job1);
-      // console.log(Job2);
-      // console.log(Job3);
-      // console.log(Job4);
-      // console.log(Job5);
-
       setEducationJobs([
         createData("중졸이하", Job1),
         createData("고졸", Job2),
@@ -102,7 +94,6 @@ function LoadLocation() {
         createData("대졸", Job4),
         createData("대학원졸", Job5),
       ]);
-      // console.log("education:", educationJobs);
     };
 
     const major = () => {
@@ -147,15 +138,6 @@ function LoadLocation() {
         .join(", ");
       createData("예체능", Job7);
 
-      // console.log(Job0);
-      // console.log(Job1);
-      // console.log("사회", Job2);
-      // console.log(Job3);
-      // console.log(Job4);
-      // console.log(Job5);
-      // console.log(Job6);
-      // console.log(Job7);
-
       setMajorJobs([
         createData("인문", Job1),
         createData("사회", Job2),
@@ -165,7 +147,6 @@ function LoadLocation() {
         createData("의학", Job6),
         createData("예체능", Job7),
       ]);
-      // console.log("major::", majorJobs);
     };
 
     education();
@@ -313,7 +294,6 @@ function LoadLocation() {
             variant="contained"
             startIcon={<DescriptionIcon />}
             onClick={() => {
-              //TODO url 추가해주기
               window.open(location.state.resultUrl, "_blank");
             }}
           >
