@@ -7,7 +7,10 @@ import axios from "axios";
 export function TestFinishPage() {
   return (
     <>
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+      <Typography
+        variant="h4"
+        sx={{ marginBottom: "20px", marginLeft: "100px" }}
+      >
         검사가 완료되었습니다.
       </Typography>
 
@@ -26,10 +29,9 @@ function LoadLocation() {
   const [allScore, setAllScore] = useState([]);
   const [educationJobs, setEducationJobs] = useState([]);
   const [majorJobs, setMajorJobs] = useState([]);
-  const url =
-    "http://www.career.go.kr/inspct/openapi/test/report?apikey=2cfc3ece4e557d4a41050b92786fdd44&qestrnSeq=6";
+  const apiKey = process.env.REACT_APP_API_KEY;
+  const url = `http://www.career.go.kr/inspct/openapi/test/report?apikey=${apiKey}&qestrnSeq=6`;
 
-  const api = "2cfc3ece4e557d4a41050b92786fdd44";
   const qestrnSeq = "6";
 
   let location = useLocation();
@@ -56,7 +58,7 @@ function LoadLocation() {
       let school = sessionStorage.getItem("userBelong");
 
       const result = await axios.post(url, {
-        apikey: api,
+        apikey: apiKey,
         qestrnSeq: qestrnSeq,
         trgetSe: targetSe,
         name: userName,
@@ -65,9 +67,9 @@ function LoadLocation() {
         grade: userGrade,
         email: "",
         startDtm: 1550466291034,
-        answers: postAnswrs,
-        // answers:
-        //   "B1=2 B2=3 B3=6 B4=7 B5=10 B6=12 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=29 B16=31 B17=33 B18=36 B19=37 B20=39 B21=41 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
+        // answers: postAnswrs,
+        answers:
+          "B1=30 B2=30 B3=30 B4=7 B5=10 B6=12 B7=14 B8=15 B9=17 B10=20 B11=21 B12=23 B13=26 B14=28 B15=30 B16=31 B17=30 B18=30 B19=30 B20=30 B21=30 B22=44 B23=45 B24=48 B25=49 B26=51 B27=53 B28=56",
       });
 
       setRequestUrl(result.data.RESULT.url);
@@ -124,15 +126,18 @@ function LoadLocation() {
       setSt(scores.indexOf(max));
       console.log("최고점", max, "인덱스", scores.indexOf(max));
       let found = scores.findIndex(e => e === max);
+      console.log("맥스의 인덱스", found);
 
-      let filterd = scores.splice(found, 1, 0);
-      console.log(filterd);
-      let second = filterd.reduce((prev, cur) => {
+      let seScore = score.slice();
+      delete seScore[found];
+      console.log("일등이 제거된 배열", seScore);
+      let second = seScore.reduce((prev, cur) => {
         return prev > cur ? prev : cur;
       }, 0);
 
-      setNd(scores.indexOf(second));
-      console.log("2등", second, "인덱스", score.indexOf(second));
+      setNd(seScore.indexOf(second));
+      console.log("2등", second, "인덱스", seScore.indexOf(second));
+      console.log(score);
     }
     requestGet();
   }, [tempStr]);
@@ -217,7 +222,9 @@ function LoadLocation() {
         </Typography>
         입니다.
       </Box>
-      <NextBtnWithoutLink title={"검사 결과 보러가기"} onClick={onClick} />
+      <Box sx={{ marginTop: "25px" }}>
+        <NextBtnWithoutLink title={"검사 결과 보러가기"} onClick={onClick} />
+      </Box>
     </>
   );
 }

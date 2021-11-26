@@ -86,7 +86,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
 
     // if (arrLen < 28) {
     //   {
-    //     // alert("모든 문항에 답변을 체크해주세요");
+    //     alert("모든 문항에 답변을 체크해주세요");
     //     return;
     //   }
     // } else {
