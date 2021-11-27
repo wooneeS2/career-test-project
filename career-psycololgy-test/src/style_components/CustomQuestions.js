@@ -84,24 +84,6 @@ function Answer({
           </HtmlTooltip>
         </RadioGroup>
       </FormControl>
-
-      {/* <ToggleButtonGroup
-        color="primary"
-        value="answer"
-        exclusive
-        value={leftValue}
-      >
-        <HtmlTooltip title={tol1} placement="left">
-          <ToggleButton value={leftValue} onChange={handleRadio}>
-            {left}
-          </ToggleButton>
-        </HtmlTooltip>
-        <HtmlTooltip title={tol2} placement="right">
-          <ToggleButton value={rightValue} onChange={handleRadio}>
-            {right}
-          </ToggleButton>
-        </HtmlTooltip>
-      </ToggleButtonGroup> */}
     </>
   );
 }

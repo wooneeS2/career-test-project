@@ -20,6 +20,7 @@ export function TestFinishPage() {
 }
 
 function LoadLocation() {
+  let location = useLocation();
   const [postAnswrs, setPostAnswrs] = useState([]);
   const [requestUrl, setRequestUrl] = useState("");
   const [seq, setSeq] = useState("");
@@ -33,8 +34,6 @@ function LoadLocation() {
   const url = `http://www.career.go.kr/inspct/openapi/test/report?apikey=${apiKey}&qestrnSeq=6`;
 
   const qestrnSeq = "6";
-
-  let location = useLocation();
 
   useEffect(() => {
     console.log(" ");
