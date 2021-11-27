@@ -9,7 +9,7 @@ export function ProgressTestPage() {
     <div>
       <div>
         <MainTitle title={"검사 진행"} />
-        <ProgressBar value={20} />
+        <ProgressBar value={100} />
         <MainQuestion></MainQuestion>
         <QuestionPagination />
       </div>

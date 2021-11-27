@@ -53,11 +53,11 @@ export function StartPage() {
   };
 
   useEffect(() => {
-    console.log("effect");
+    console.log(" ");
   }, [gender]);
   useEffect(() => {
     gender !== "" && name !== "" ? setIsActive(true) : setIsActive(false);
-    console.log("name", name, "gender ", gender);
+
     sessionStorage.setItem("userGender", gender);
     sessionStorage.setItem("userName", name);
     sessionStorage.setItem("userTarget", targetSe);

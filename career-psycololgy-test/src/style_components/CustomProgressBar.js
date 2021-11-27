@@ -16,12 +16,6 @@ export function ProgressBar(props) {
           {...props}
         />
       </Box>
-      <Box>
-        <Typography
-          variant="body1"
-          sx={{ color: "#2D2627", fontWeight: "bold", fontSize: "1rem" }}
-        >{`${Math.round(props.value)}%`}</Typography>
-      </Box>
     </Box>
   );
 }

@@ -1,12 +1,12 @@
 import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
-import "../style_components/pagination.css";
+import { useHistory } from "react-router-dom";
 import QuestionList from "../style_components/CustomQuestions";
 import {
   PageButton,
   NextBtnWithoutLink,
 } from "../style_components/CustomButtons";
-import { useHistory } from "react-router-dom";
+import "../style_components/pagination.css";
 
 export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [currentItems, setCurrentItems] = useState(null);
@@ -17,7 +17,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+
     setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
     endOffset === pageCount * itemsPerPage ? setIsEnd(true) : setIsEnd(false);
@@ -25,9 +25,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
 
   const handlePageClick = event => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+
     setItemOffset(newOffset);
   };
 
@@ -58,12 +56,9 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
                         (v, i, a) => a.findIndex(t => t.id === v.id) === i
                       )
                       .reverse();
-                    console.log(newLen);
 
                     return temp;
                   });
-
-                  console.log("new::", newAnswr);
                 }}
               />
             </div>
@@ -73,8 +68,8 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   };
 
   let history = useHistory();
-  function handleClick() {
-    let arrLen = newAnswr
+  function deduplication(arr) {
+    let arrLen = arr
       .slice()
       .reverse()
       .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
@@ -82,28 +77,29 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       .sort(function (a, b) {
         return a.id - b.id;
       }).length;
-    console.log(arrLen);
-
-    // if (arrLen < 28) {
-    //   {
-    //     alert("모든 문항에 답변을 체크해주세요");
-    //     return;
-    //   }
-    // } else {
-    history.push({
-      pathname: "/test-finish",
-      state: {
-        newAnswr: newAnswr
-          .slice()
-          .reverse()
-          .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-          .reverse()
-          .sort(function (a, b) {
-            return a.id - b.id;
-          }),
-      },
-    });
-    // }
+    return arrLen;
+  }
+  function handleClick() {
+    if (deduplication(newAnswr) < 28) {
+      {
+        alert("모든 문항에 답변을 체크해주세요");
+        return;
+      }
+    } else {
+      history.push({
+        pathname: "/test-finish",
+        state: {
+          newAnswr: newAnswr
+            .slice()
+            .reverse()
+            .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+            .reverse()
+            .sort(function (a, b) {
+              return a.id - b.id;
+            }),
+        },
+      });
+    }
   }
 
   return (
@@ -112,11 +108,11 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       {/* TODO 응답 배열의 개수 == endOffset이면 버튼 활성화 */}
 
       <ReactPaginate
-        nextLabel={<PageButton title={"다음"} disabled={true} />}
+        nextLabel={<PageButton title="다음" disabled={true} />}
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
         pageCount={pageCount}
-        previousLabel={<PageButton title={"이전"} disabled={true} />}
+        previousLabel={<PageButton title="이전" disabled={true} />}
         containerClassName="pagination"
         renderOnZeroPageCount={null}
         pageClassName="numbering"

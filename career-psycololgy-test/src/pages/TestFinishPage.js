@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { NextBtnWithoutLink } from "../style_components/CustomButtons";
-import { Typography, Box } from "@mui/material";
 import axios from "axios";
+import { Typography, Box } from "@mui/material";
+import { NextBtnWithoutLink } from "../style_components/CustomButtons";
 
 export function TestFinishPage() {
   return (
@@ -37,7 +37,7 @@ function LoadLocation() {
   let location = useLocation();
 
   useEffect(() => {
-    console.log("location", location);
+    console.log(" ");
   }, []);
 
   useEffect(() => {
@@ -73,14 +73,12 @@ function LoadLocation() {
       });
 
       setRequestUrl(result.data.RESULT.url);
-      console.log("결과", requestUrl);
     }
     requsetPost();
   }, [postAnswrs]);
 
   useEffect(() => {
     let tempSeq = requestUrl.split("seq=")[1];
-    console.log(tempSeq);
 
     setSeq(tempSeq);
   }, [requestUrl]);
@@ -90,7 +88,6 @@ function LoadLocation() {
     async function requestGet() {
       let infoUrl = `https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`;
 
-      console.log("seq", seq);
       const result = await axios.get(infoUrl);
 
       setResultData(result.data);
@@ -118,26 +115,23 @@ function LoadLocation() {
       score.pop();
       setAllScore(score);
       let scores = [...score, 0];
-      console.log("최종 점수:", score);
+
       let max = scores.reduce((prev, cur) => {
         return prev > cur ? prev : cur;
       }, 0);
 
       setSt(scores.indexOf(max));
-      console.log("최고점", max, "인덱스", scores.indexOf(max));
+
       let found = scores.findIndex(e => e === max);
-      console.log("맥스의 인덱스", found);
 
       let seScore = score.slice();
       delete seScore[found];
-      console.log("일등이 제거된 배열", seScore);
+
       let second = seScore.reduce((prev, cur) => {
         return prev > cur ? prev : cur;
       }, 0);
 
       setNd(seScore.indexOf(second));
-      console.log("2등", second, "인덱스", seScore.indexOf(second));
-      console.log(score);
     }
     requestGet();
   }, [tempStr]);
@@ -149,9 +143,8 @@ function LoadLocation() {
         st + 1
       }&no2=${nd + 1}`;
       const response = await axios.get(jobUrl);
-      console.log("joburl", jobUrl);
+
       setEducationJobs([response.data]);
-      console.log("education", response.data);
     }
 
     async function requestMajor() {
@@ -159,9 +152,8 @@ function LoadLocation() {
         st + 1
       }&no2=${nd + 1}`;
       const response = await axios.get(majorUrl);
-      console.log("majorUrl", majorUrl);
+
       setMajorJobs([response.data]);
-      console.log("major", response.data);
     }
 
     requestEducation();

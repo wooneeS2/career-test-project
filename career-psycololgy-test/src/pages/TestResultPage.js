@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useHistory, Redirect } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import {
   Button,
   Table,
@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import ReplayIcon from "@mui/icons-material/Replay";
-import "../style_components/Tables.css";
 import ShareIcon from "@mui/icons-material/Share";
 import {
   ArgumentAxis,
@@ -24,6 +23,7 @@ import {
   Chart,
   BarSeries,
 } from "@devexpress/dx-react-chart-material-ui";
+import "../style_components/Tables.css";
 
 export function TestResultPage() {
   return (
@@ -46,11 +46,11 @@ function LoadLocation() {
   const [educationJobs, setEducationJobs] = useState([]);
   const [majorJobs, setMajorJobs] = useState([]);
   const [valueScore, setValueScore] = useState([]);
+  const [resultUrl, setResultUrl] = useState("");
   let location = useLocation();
   useEffect(() => {
-    console.log("location", location);
     setValueScore(location.state.score);
-    console.log(valueScore);
+    setResultUrl(location.state.resultUrl);
   }, []);
 
   useEffect(() => {
@@ -265,11 +265,10 @@ function LoadLocation() {
       </Paper>
     );
   }
-  console.log(location);
 
   const handleCopyClipBoard = async () => {
     try {
-      await navigator.clipboard.writeText(location.state.resultUrl);
+      await navigator.clipboard.writeText(resultUrl);
       alert("복사되었습니다. 링크를 공유해보세요.");
     } catch (e) {
       alert("복사 실패");

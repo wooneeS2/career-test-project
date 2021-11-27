@@ -1,10 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import axios from "axios";
-import "../style_components/pagination.css";
+import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import PaginatedItems from "./MakePagination";
 import { Box } from "@mui/material";
+import "../style_components/pagination.css";
 
 export function QuestionPagination() {
   const [questions, setQeustions] = useState([]);
@@ -16,7 +16,7 @@ export function QuestionPagination() {
     const response = await axios.get(url);
 
     setQeustions(response.data.RESULT);
-    console.log(`isDataOn ::: ${isDataOn}`);
+
     questions !== null ? setIsDataOn(true) : setIsDataOn(false);
   };
 
