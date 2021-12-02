@@ -23,7 +23,7 @@ export function QuestionPagination() {
   useEffect(() => {
     requestQuestion();
   }, []);
-
+  //get요청 전에는 로딩 표시가 되도록 하는 컴포넌트
   return (
     <div>
       {isDataOn ? (

@@ -4,7 +4,7 @@ import {
   QuestionList,
   MainQuestion,
 } from "../style_components/CustomQuestions";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import NextBtn from "../style_components/CustomButtons";
 import ProgressBar from "../style_components/CustomProgressBar";
 import MainTitle from "../style_components/CustomTitles";
@@ -52,6 +52,8 @@ export function SampleQuestionPage() {
     connectSampleQuestion();
   }, []);
 
+  // 검사 예시 페이지
+
   return (
     <Grid
       container
@@ -67,6 +69,9 @@ export function SampleQuestionPage() {
 
       <Box sx={{ paddingBottom: "10px" }}>
         <MainQuestion />
+        <Typography>
+          검사 예시 페이지입니다. 문항을 선택하고 검사 시작하기를 눌러주세요.
+        </Typography>
       </Box>
       <QuestionList
         questions={{

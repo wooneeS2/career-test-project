@@ -4,6 +4,7 @@ import axios from "axios";
 import { Typography, Box } from "@mui/material";
 import { NextBtnWithoutLink } from "../style_components/CustomButtons";
 
+// 검사완료 페이지(검사 결과 페이지와는 다름)
 export function TestFinishPage() {
   return (
     <>
@@ -19,6 +20,8 @@ export function TestFinishPage() {
   );
 }
 
+// useLocation을 사용하기 위해 만든 컴포넌트
+//TODO 분리할 수 있는 컴포넌트 분리하기
 function LoadLocation() {
   let location = useLocation();
   const [postAnswrs, setPostAnswrs] = useState([]);
@@ -36,10 +39,7 @@ function LoadLocation() {
 
   const qestrnSeq = "6";
 
-  useEffect(() => {
-    console.log(" ");
-  }, []);
-
+  // 컴포넌트가 생성될 때, location의 정답을 불러와저장
   useEffect(() => {
     const result = location.state.newAnswr
       .map((answer, index) => {
@@ -49,6 +49,7 @@ function LoadLocation() {
     setPostAnswrs(result);
   }, [location]);
 
+  // answer가 저장되면 session storage의 값들과 다른 값들을 불러와서 post 요청
   useEffect(() => {
     async function requsetPost() {
       setUserInfo(JSON.parse(sessionStorage.getItem("user")));
@@ -78,12 +79,14 @@ function LoadLocation() {
     requsetPost();
   }, [postAnswrs]);
 
+  // requestUrl의 값이 바뀌면 검사 결과를 get할때 필요한 seq 값 저장
   useEffect(() => {
     let tempSeq = requestUrl.split("seq=")[1];
 
     setSeq(tempSeq);
   }, [requestUrl]);
 
+  // tempseq가 생기면 검사 결과 get 요청
   const [tempStr, setTempStr] = useState("");
   useEffect(() => {
     async function requestGet() {
@@ -98,6 +101,7 @@ function LoadLocation() {
     requestGet();
   }, [seq]);
 
+  // 검사 결과중 가장 높은 점수와 두번째 점수 저장
   useEffect(() => {
     async function requestGet() {
       const split = tempStr.split(" ");
@@ -138,7 +142,7 @@ function LoadLocation() {
   }, [tempStr]);
 
   useEffect(() => {
-    //학력별 직업
+    //학력별 직업 get 요청
     async function requestEducation() {
       let jobUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${
         st + 1
@@ -148,6 +152,7 @@ function LoadLocation() {
       setEducationJobs([response.data]);
     }
 
+    //전공별 직업 get 요청
     async function requestMajor() {
       let majorUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${
         st + 1
@@ -163,6 +168,7 @@ function LoadLocation() {
 
   let history = useHistory();
 
+  //검사 결과 페이지로 넘어갈 때 useHistory를 이용하여 각종 정보들을 함께 보냄.
   const onClick = () => {
     history.push({
       pathname: "/test-result",

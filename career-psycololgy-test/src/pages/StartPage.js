@@ -52,6 +52,7 @@ export function StartPage() {
     value === null ? setTargetSe("-") : setTargetSe(value);
   };
 
+  // 각각의 입력값들이 바뀔 때, 값 저장
   useEffect(() => {
     console.log(" ");
   }, [gender]);

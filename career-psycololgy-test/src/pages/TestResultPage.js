@@ -25,6 +25,7 @@ import {
 } from "@devexpress/dx-react-chart-material-ui";
 import "../style_components/Tables.css";
 
+//검사 결과 페이지
 export function TestResultPage() {
   return (
     <>
@@ -40,6 +41,8 @@ export function TestResultPage() {
   );
 }
 
+//useLocation을 이용하기 위한 컴포넌트
+//TODO 분리할 수 있는 컴포넌트 분리하기
 function LoadLocation() {
   const [educationData, setEducationData] = useState([]);
   const [majorData, setmajorData] = useState([]);
@@ -48,18 +51,21 @@ function LoadLocation() {
   const [valueScore, setValueScore] = useState([]);
   const [resultUrl, setResultUrl] = useState("");
   let location = useLocation();
+
+  //컴포넌트가 마운트 될 때 location의 값 저장
   useEffect(() => {
     setValueScore(location.state.score);
     setResultUrl(location.state.resultUrl);
-    console.log(location);
   }, []);
 
+  //학력별, 전공별 추천 직업 데이터 불러오기
   useEffect(() => {
     setEducationData(location.state.education[0]);
 
     setmajorData(location.state.major[0]);
   }, [location]);
 
+  //표에 들어갈 데이터 더미 만들어주기
   useEffect(() => {
     const education = () => {
       const Job1 = educationData
@@ -171,6 +177,7 @@ function LoadLocation() {
     };
   }
 
+  //추천 직업 표 컴포넌트
   function JobTable({ data, title }) {
     return (
       <TableContainer component={Paper} classes="type09">
@@ -240,6 +247,7 @@ function LoadLocation() {
     );
   }
 
+  //가치관 차트 컴포넌트
   function Ranking() {
     const data = [
       { argument: "능력발휘", value: valueScore[0] },
@@ -267,6 +275,7 @@ function LoadLocation() {
     );
   }
 
+  //공유하기 기능
   const handleCopyClipBoard = async () => {
     try {
       await navigator.clipboard.writeText(resultUrl);
@@ -276,6 +285,8 @@ function LoadLocation() {
       console.log(e);
     }
   };
+
+  //ui컴포넌트
   let today = new Date();
   let year = today.getFullYear(); // 년도
   let month = today.getMonth() + 1; // 월

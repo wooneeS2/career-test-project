@@ -8,6 +8,7 @@ import {
 } from "../style_components/CustomButtons";
 import "../style_components/pagination.css";
 
+// 테스트 문항을 5개씩 나눠서 보여주는 페이지네이션 컴포넌트
 export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -29,6 +30,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
     setItemOffset(newOffset);
   };
 
+  // 문항과 답을 하나씩 만들어주는 컴포넌트
   const Items = () => {
     return (
       <div className="items">
@@ -68,6 +70,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
   };
 
   let history = useHistory();
+  //history를 통해 정답을 보내기 전에 응답 받은 항목들의 중복 제거하기
   function deduplication(arr) {
     let arrLen = arr
       .slice()
@@ -119,7 +122,7 @@ export function PaginatedItems({ itemsPerPage, items, questionIndex }) {
       />
 
       {/* TODO 응답 배열의 개수 !== 전체 문항의 개수 경고문 표시하고 링크 작동 X */}
-      {/* {<NextBtn toPath={"/test-finish"} title={"검사완료"} isActive={false} />} */}
+
       {isEnd ? (
         <NextBtnWithoutLink title={"검사 완료"} onClick={handleClick} />
       ) : null}
