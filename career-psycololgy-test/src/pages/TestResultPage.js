@@ -51,6 +51,7 @@ function LoadLocation() {
   useEffect(() => {
     setValueScore(location.state.score);
     setResultUrl(location.state.resultUrl);
+    console.log(location);
   }, []);
 
   useEffect(() => {
@@ -283,8 +284,8 @@ function LoadLocation() {
   return (
     <>
       <Typography display={"inline"} sx={{ backgroundColor: "#D7E7D4" }}>
-        [{sessionStorage.getItem("userName")},
-        {sessionStorage.getItem("userGender") === "100324" ? "여자" : "남자"},
+        [{location.state.userInfo.name},
+        {location.state.userInfo.gender === "100324" ? "여자" : "남자"},
         {`${year}년 ${month}월 ${date}일`}]
       </Typography>
 

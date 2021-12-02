@@ -30,6 +30,7 @@ function LoadLocation() {
   const [allScore, setAllScore] = useState([]);
   const [educationJobs, setEducationJobs] = useState([]);
   const [majorJobs, setMajorJobs] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const apiKey = process.env.REACT_APP_API_KEY;
   const url = `http://www.career.go.kr/inspct/openapi/test/report?apikey=${apiKey}&qestrnSeq=6`;
 
@@ -50,11 +51,12 @@ function LoadLocation() {
 
   useEffect(() => {
     async function requsetPost() {
-      let targetSe = sessionStorage.getItem("userTarget");
-      let userName = sessionStorage.getItem("userName");
-      let userGrade = sessionStorage.getItem("userGrade");
-      let userGender = sessionStorage.getItem("userGender");
-      let school = sessionStorage.getItem("userBelong");
+      setUserInfo(JSON.parse(sessionStorage.getItem("user")));
+      let targetSe = userInfo.targetSe;
+      let userName = userInfo.name;
+      let userGrade = userInfo.grade;
+      let userGender = userInfo.gender;
+      let school = userInfo.belong;
 
       const result = await axios.post(url, {
         apikey: apiKey,
@@ -169,6 +171,7 @@ function LoadLocation() {
         score: allScore,
         education: educationJobs,
         major: majorJobs,
+        userInfo: userInfo,
       },
     });
   };
@@ -192,7 +195,7 @@ function LoadLocation() {
           display={"inline"}
           sx={{ fontWeight: "bold", backgroundColor: "#D7E7D4" }}
         >
-          {sessionStorage.getItem("userName")}
+          {userInfo.name}
         </Typography>
         <Typography display={"inline"}>
           님이 직업을 선택할 때 있어서 중요하게 생각하는 <br />

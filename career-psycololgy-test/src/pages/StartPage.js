@@ -58,12 +58,15 @@ export function StartPage() {
   useEffect(() => {
     gender !== "" && name !== "" ? setIsActive(true) : setIsActive(false);
 
-    sessionStorage.setItem("userGender", gender);
-    sessionStorage.setItem("userName", name);
-    sessionStorage.setItem("userTarget", targetSe);
-    sessionStorage.setItem("userGrade", grade);
-    sessionStorage.setItem("userBelong", belong);
-  }, [gender, name, grade, targetSe]);
+    var user = {
+      name: name,
+      gender: gender,
+      target: targetSe,
+      grade: grade,
+      belong: belong,
+    };
+    sessionStorage.setItem("user", JSON.stringify(user));
+  }, [gender, name, grade, targetSe, belong]);
 
   return (
     <div>
