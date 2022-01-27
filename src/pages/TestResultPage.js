@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useHistory, Redirect } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import {
   Button,
   Table,
@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import ReplayIcon from "@mui/icons-material/Replay";
-import "../style_components/Tables.css";
 import ShareIcon from "@mui/icons-material/Share";
 import {
   ArgumentAxis,
@@ -24,7 +23,9 @@ import {
   Chart,
   BarSeries,
 } from "@devexpress/dx-react-chart-material-ui";
+import "../style_components/Tables.css";
 
+//검사 결과 페이지
 export function TestResultPage() {
   return (
     <>
@@ -40,25 +41,31 @@ export function TestResultPage() {
   );
 }
 
+//useLocation을 이용하기 위한 컴포넌트
+//TODO 분리할 수 있는 컴포넌트 분리하기
 function LoadLocation() {
   const [educationData, setEducationData] = useState([]);
   const [majorData, setmajorData] = useState([]);
   const [educationJobs, setEducationJobs] = useState([]);
   const [majorJobs, setMajorJobs] = useState([]);
   const [valueScore, setValueScore] = useState([]);
+  const [resultUrl, setResultUrl] = useState("");
   let location = useLocation();
+
+  //컴포넌트가 마운트 될 때 location의 값 저장
   useEffect(() => {
-    console.log("location", location);
     setValueScore(location.state.score);
-    console.log(valueScore);
+    setResultUrl(location.state.resultUrl);
   }, []);
 
+  //학력별, 전공별 추천 직업 데이터 불러오기
   useEffect(() => {
     setEducationData(location.state.education[0]);
 
     setmajorData(location.state.major[0]);
   }, [location]);
 
+  //표에 들어갈 데이터 더미 만들어주기
   useEffect(() => {
     const education = () => {
       const Job1 = educationData
@@ -170,6 +177,7 @@ function LoadLocation() {
     };
   }
 
+  //추천 직업 표 컴포넌트
   function JobTable({ data, title }) {
     return (
       <TableContainer component={Paper} classes="type09">
@@ -239,6 +247,7 @@ function LoadLocation() {
     );
   }
 
+  //가치관 차트 컴포넌트
   function Ranking() {
     const data = [
       { argument: "능력발휘", value: valueScore[0] },
@@ -265,17 +274,19 @@ function LoadLocation() {
       </Paper>
     );
   }
-  console.log(location);
 
+  //공유하기 기능
   const handleCopyClipBoard = async () => {
     try {
-      await navigator.clipboard.writeText(location.state.resultUrl);
+      await navigator.clipboard.writeText(resultUrl);
       alert("복사되었습니다. 링크를 공유해보세요.");
     } catch (e) {
       alert("복사 실패");
       console.log(e);
     }
   };
+
+  //ui컴포넌트
   let today = new Date();
   let year = today.getFullYear(); // 년도
   let month = today.getMonth() + 1; // 월
@@ -284,8 +295,8 @@ function LoadLocation() {
   return (
     <>
       <Typography display={"inline"} sx={{ backgroundColor: "#D7E7D4" }}>
-        [{sessionStorage.getItem("userName")},
-        {sessionStorage.getItem("userGender") === "100324" ? "여자" : "남자"},
+        [{location.state.userInfo.name},
+        {location.state.userInfo.gender === "100324" ? "여자" : "남자"},
         {`${year}년 ${month}월 ${date}일`}]
       </Typography>
 

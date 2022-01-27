@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   QuestionList,
   MainQuestion,
 } from "../style_components/CustomQuestions";
-import { Grid, Box } from "@mui/material";
-import axios from "axios";
+import { Grid, Box, Typography } from "@mui/material";
 import NextBtn from "../style_components/CustomButtons";
 import ProgressBar from "../style_components/CustomProgressBar";
 import MainTitle from "../style_components/CustomTitles";
@@ -22,13 +22,11 @@ export function SampleQuestionPage() {
   });
 
   const handleIsActive = e => {
-    console.log(e.target.value);
     e.target.value !== null ? setIsActive(true) : setIsActive(false);
-    console.log(isActive);
   };
 
   useEffect(() => {
-    console.log("effect isActive", isActive);
+    console.log(" ");
   }, [isActive]);
 
   const url =
@@ -52,8 +50,9 @@ export function SampleQuestionPage() {
 
   useEffect(() => {
     connectSampleQuestion();
-    console.log("local");
   }, []);
+
+  // 검사 예시 페이지
 
   return (
     <Grid
@@ -70,6 +69,9 @@ export function SampleQuestionPage() {
 
       <Box sx={{ paddingBottom: "10px" }}>
         <MainQuestion />
+        <Typography>
+          검사 예시 페이지입니다. 문항을 선택하고 검사 시작하기를 눌러주세요.
+        </Typography>
       </Box>
       <QuestionList
         questions={{
